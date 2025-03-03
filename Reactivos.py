@@ -24,7 +24,4 @@ class __Reactivos(_Lector_de_APIS):
             s = json.loads(s)
             self._reactivo.append(s)
         archivo.close()
-        return(self._reactivo)
 
-hola = Reactivos()
-print(hola.Lector_de_Datos())
