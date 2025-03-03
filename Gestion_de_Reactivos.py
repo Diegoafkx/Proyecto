@@ -3,7 +3,6 @@ import json
 class Gestion_de_Reactivos(__Reactivos):
     def __init__(self):
         super().__init__()
-    
         Gestion_de_Reactivos.Lector_de_Datos(self)
 
     def Analizador_de_Informacion_Reactivo(self,indicador_del_reactivo,accion):
@@ -99,15 +98,19 @@ class Gestion_de_Reactivos(__Reactivos):
                         mas_de_una_conversion = False
                         conversion = self._conversiones_posibles
                     
-                    for s in conversion:
-                        self._inventario_disponible = self._inventario_disponible * s.get("factor")
-                        factor = s.get("factor") * s.get("factor")
-                        x = s.get("unidad")
-                        unidad = self._unidad_de_medicion
-                        self._unidad_de_medicion = x
+                    
+                    self._inventario_disponible = self._inventario_disponible * conversion.get("factor")
+                    self._minimo_sugerido = self._minimo_sugerido * conversion.get("factor")
+                    factor = 1/conversion.get("factor")
+                    x = conversion.get("unidad")
+                    unidad = self._unidad_de_medicion
+                    self._unidad_de_medicion = x
 
-                        if mas_de_una_conversion == True:
-                            self._conversiones_posibles.append({"unidad": unidad, "factor": factor})
+                    if mas_de_una_conversion == True:
+                        self._conversiones_posibles= conversiones
+                        self._conversiones_posibles.append({"unidad": unidad, "factor": factor})
+                    
+                    
 
                 aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles }
                 reactivo_copia.append(aux)
@@ -119,6 +122,7 @@ class Gestion_de_Reactivos(__Reactivos):
                 else:
                     archivo = open("Reactivos.json","a", encoding = "utf-8")
                     archivo.write(f"{aux}\n")
+                    
 
         if accion == 2 or accion == 3 or accion == 5:
             self._reactivo = []
@@ -164,6 +168,12 @@ class Gestion_de_Reactivos(__Reactivos):
 
     def Cambiar_la_UnidadMedida(self,indicador_del_reactivo):
         Gestion_de_Reactivos.Analizador_de_Informacion_Reactivo(self,indicador_del_reactivo, 5)
+        for i in self._reactivo:
+            if i.get("id") == indicador_del_reactivo:
+                for s in i: 
+                    print(f"{s}: {i.get(s)}")
+                print("Se a cambiado la unidad de medicion con exito")
+            break
 
     def Configurar_Reactivo(self):
         self._nombre = input("Escribe el nombre del reactivo: ")
@@ -185,8 +195,7 @@ class Gestion_de_Reactivos(__Reactivos):
                 break
 
 hola = Gestion_de_Reactivos()
-hola.Lector_de_Datos()
-reactivos = hola.Analizador_de_Informacion_Reactivo(1,0)
+reactivos = hola.Analizador_de_Informacion_Reactivo(1,1)
 print(reactivos)
 for s in reactivos:
     print(f"{s}: {reactivos.get(s)}")
@@ -195,4 +204,5 @@ for s in reactivos:
 """print(hola.Agregar_Editar_o_Eliminar_Reactivo(1,2,2))
 print(hola.Agregar_Editar_o_Eliminar_Reactivo(2,3,3))"""
 "hola.Estatus_de_los_Reactivos()"
+hola.Cambiar_la_UnidadMedida(1)
 hola.Cambiar_la_UnidadMedida(1)
