@@ -1,7 +1,7 @@
 from Lector_de_APIS import _Lector_de_APIS 
 import json
 
-class Reactivos(_Lector_de_APIS):
+class __Reactivos(_Lector_de_APIS):
     def __init__(self):
         self._id_reactivo = None
         self._nombre = None
