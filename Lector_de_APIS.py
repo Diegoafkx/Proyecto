@@ -25,3 +25,5 @@ class _Lector_de_APIS:
             archivo.write(f"{json.dumps(s)}\n")
         archivo.close() 
            
+
+           
