@@ -1,7 +1,7 @@
 from Lector_de_APIS import _Lector_de_APIS 
 import json
 
-class __Receta(_Lector_de_APIS):
+class __Receta:
     def __init__(self):
         self._id_receta = None
         self._nombre = None
