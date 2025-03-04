@@ -1,7 +1,7 @@
 from Reactivos import __Reactivos
 import json
+
 class Gestion_de_Reactivos(__Reactivos):
-    
     def __init__(self):
         super().__init__()
         Gestion_de_Reactivos.Lector_de_Datos(self)
