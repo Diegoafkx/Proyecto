@@ -195,15 +195,3 @@ class Gestion_de_Reactivos(__Reactivos):
             if option == "1":
                 break
 
-hola = Gestion_de_Reactivos()
-reactivos = hola.Analizador_de_Informacion_Reactivo(1,1)
-print(reactivos)
-for s in reactivos:
-    print(f"{s}: {reactivos.get(s)}")
-#agregar es la opcion 1, editar es la opcion 2 y eliminar la opcion 3
-"print(hola.Agregar_Editar_o_Eliminar_Reactivo(1,1,3))"
-"""print(hola.Agregar_Editar_o_Eliminar_Reactivo(1,2,2))
-print(hola.Agregar_Editar_o_Eliminar_Reactivo(2,3,3))"""
-"hola.Estatus_de_los_Reactivos()"
-hola.Cambiar_la_UnidadMedida(1)
-hola.Cambiar_la_UnidadMedida(1)
