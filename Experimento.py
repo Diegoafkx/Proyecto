@@ -1,7 +1,7 @@
 from Lector_de_APIS import _Lector_de_APIS 
 import json
 
-class __Experimnto(_Lector_de_APIS):
+class __Experimnto:
     def __init__(self):
         self._id_experimento = None
         self._receta_id = None  
