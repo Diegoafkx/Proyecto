@@ -1,6 +1,5 @@
 import requests
 import json
-from io import open
 
 class _Lector_de_APIS:
     def __init__(self, url,indicador):
