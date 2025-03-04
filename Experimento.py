@@ -20,5 +20,3 @@ class __Experimnto(_Lector_de_APIS):
             s = json.loads(s)
             self._experimento.append(s)
         archivo.close()
-
-print(__Experimnto().Lector_de_Datos())
