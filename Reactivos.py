@@ -1,6 +1,9 @@
 from Lector_de_APIS import _Lector_de_APIS 
 import json
 
+#Este modulo se encarga de activar el modulo de Lector_de_APIS, enviando el url y el indicador correspondiente.
+#Luego lee el archivo JSON que se genero y guarda la informacion en una lista que le heredara a la clase Gestion_de_Reactivos.
+
 class __Reactivos:
     def __init__(self):
         self._id_reactivo = None

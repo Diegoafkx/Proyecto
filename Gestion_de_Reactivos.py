@@ -1,18 +1,27 @@
 from Reactivos import __Reactivos
 import json
 
+#Modulo que se encarga de gestionar los reactivos, agregar, editar, eliminar, cambiar la unidad de medicion y ver el estatus de los reactivos
+#Heredo todos los atributos y metodos de la clase __Reactivos
+
 class Gestion_de_Reactivos(__Reactivos):
     def __init__(self):
         super().__init__()
         Gestion_de_Reactivos.Lector_de_Datos(self)
 
     def Analizador_de_Informacion_Reactivo(self,indicador_del_reactivo,accion):
+        
+        #Este metodo se encarga de asociar los datos de la API que guardamos en el archivo Reactivos.json con los atributos de la clase.
+        #Este metodo tambien se encargan de auxiliar a los demas metodos de la clase.
+        #El valor que recibe el parametro accion es el que determina cual es el metodo que esta auxiliando.
+
         conversiones = []
         ya_paso = True
         fist_time = True
         reactivo_copia = []
         advertensia = []
         self.advise = False
+
         for s in self._reactivo:
             self._id_reactivo = s.get("id")
             self._nombre = s.get("nombre")
@@ -26,11 +35,13 @@ class Gestion_de_Reactivos(__Reactivos):
             self._conversiones_posibles = s.get("conversiones_posibles")
             
             if accion == 1:
+                #Esta accion se encarga de enviar los datos del reactivo que se desea ver.
                 if self._id_reactivo == indicador_del_reactivo:
                     return s    
             
             elif accion == 2:
-                    
+                #esta auxilia al metodo Agregar_Editar_o_Eliminar_Reactivo.
+                #Esta se encarga de editar un reactivo en especifico.
                 if indicador_del_reactivo == self._id_reactivo:
                     Gestion_de_Reactivos.Configurar_Reactivo(self)
                 aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles }
@@ -45,6 +56,8 @@ class Gestion_de_Reactivos(__Reactivos):
                     archivo.write(f"{aux}\n")
 
             elif accion == 3:
+                #esta auxilia al metodo Agregar_Editar_o_Eliminar_Reactivo.
+                #Esta se encarga de eliminar un reactivo en especifico.
                 if indicador_del_reactivo == self._id_reactivo:
                     ya_paso = False
                 elif indicador_del_reactivo != self._id_reactivo and ya_paso == True:
@@ -71,12 +84,13 @@ class Gestion_de_Reactivos(__Reactivos):
                         archivo.write(f"{aux}\n")
                 
             elif accion == 4:
+                #Esta accion axulia al metodo Estatus_de_los_Reactivos, buscando que reactivos tienen menos de la cantidad minima sugerida.
                 if self._inventario_disponible < self._minimo_sugerido:
                     advertensia.append([self._nombre,self._minimo_sugerido,self._inventario_disponible])
                     self.advise = True
 
             if accion == 5:
-
+                #Esta accion auxilia al metodo Cambiar_la_UnidadMedida, se encarga de cambiar la unidad de medicion de un reactivo en especifico.
                 if indicador_del_reactivo == self._id_reactivo:
                     if len(self._conversiones_posibles)+1 > 1:
                         mas_de_una_conversion = True
@@ -126,15 +140,26 @@ class Gestion_de_Reactivos(__Reactivos):
                     
 
         if accion == 2 or accion == 3 or accion == 5:
+
+            #Ayuda a los metodos Agregar_Editar_o_Eliminar_Reactivo y Cambiar_la_UnidadMedida.
+            #Se encarga de guardar los cambios en la lista de reactivos. 
+
             self._reactivo = []
             self._reactivo = reactivo_copia
             archivo.close()
         
         elif accion == 4:
+            #Este retorna una lista con los reactivos que tienen menos de la cantidad minima sugerida, para que se imprima en el metodo Estatus_de_los_Reactivos.
             return advertensia
     
     def Agregar_Editar_o_Eliminar_Reactivo(self, indicador_del_reactivo, auxiliador):
-        
+        #Este metodo se encarga de agregar, editar o eliminar un reactivo.
+        #El parametro indicador_del_reactivo es el id del reactivo que se desea editar o eliminar.
+        #El parametro auxiliador es el que determina que accion se va a realizar, esto para que el metodo Analizador_de_Informacion_Reactivo sepa que hacer.
+        #Si auxiliador es 1, se agrega un reactivo.
+        #Si auxiliador es 2, se edita un reactivo.
+        #Si auxiliador es 3, se elimina un reactivo.
+
         if auxiliador == 1:
             for s in self._reactivo:
                 self._id_reactivo = max(s.get("id"))+1
@@ -158,6 +183,7 @@ class Gestion_de_Reactivos(__Reactivos):
                 return "Se a eliminado el reactivo con exito"
 
     def Estatus_de_los_Reactivos(self):
+        #Este metodo se encarga de ver el estatus de los reactivos, si hay alguno que tenga menos de la cantidad minima sugerida.
         advertensia = Gestion_de_Reactivos.Analizador_de_Informacion_Reactivo(self,0,False,4)
         if self.advise == True:
             print("-------ADVERTENCIA-----")
@@ -168,6 +194,8 @@ class Gestion_de_Reactivos(__Reactivos):
             print("Todo en orden")
 
     def Cambiar_la_UnidadMedida(self,indicador_del_reactivo):
+        #Este metodo se encarga de cambiar la unidad de medicion de un reactivo en especifico.
+        #El parametro indicador_del_reactivo es el id del reactivo que se desea cambiar la unidad de medicion.
         Gestion_de_Reactivos.Analizador_de_Informacion_Reactivo(self,indicador_del_reactivo, 5)
         for i in self._reactivo:
             if i.get("id") == indicador_del_reactivo:
@@ -177,6 +205,10 @@ class Gestion_de_Reactivos(__Reactivos):
             break
 
     def Configurar_Reactivo(self):
+
+        #Este metodo se encarga de configurar un reactivo, es decir, pedir los datos necesarios para crear un reactivo.
+        #Este metodo se auxilia del metodo Agregar_Editar_o_Eliminar_Reactivo, especificamente a auxiliador 1 y 2, ees decir, agregar y editar.
+
         self._nombre = input("Escribe el nombre del reactivo: ")
         self._descripcion = input("Escribe la descripcion del reactivo: ")
         self._costo = float(input("Escribe el costo del reactivo: "))
