@@ -152,14 +152,14 @@ class Gestion_de_Reactivos(__Reactivos):
             #Este retorna una lista con los reactivos que tienen menos de la cantidad minima sugerida, para que se imprima en el metodo Estatus_de_los_Reactivos.
             return advertensia
     
-    def Agregar_Editar_o_Eliminar_Reactivo(self, indicador_del_reactivo, auxiliador):
+    def Agregar_Editar_o_Eliminar_Reactivo(self):
         #Este metodo se encarga de agregar, editar o eliminar un reactivo.
         #El parametro indicador_del_reactivo es el id del reactivo que se desea editar o eliminar.
         #El parametro auxiliador es el que determina que accion se va a realizar, esto para que el metodo Analizador_de_Informacion_Reactivo sepa que hacer.
         #Si auxiliador es 1, se agrega un reactivo.
         #Si auxiliador es 2, se edita un reactivo.
         #Si auxiliador es 3, se elimina un reactivo.
-
+        auxiliador = int(input("Que deseas Realiza\n1-Agregar\n2-Editar\n3-Eliminar\n--------->"))
         if auxiliador == 1:
             for s in self._reactivo:
                 self._id_reactivo = max(s.get("id"))+1
@@ -175,6 +175,7 @@ class Gestion_de_Reactivos(__Reactivos):
             return "se agrego el reactivo exitosamente."
 
         elif auxiliador == 2 or auxiliador == 3:
+            indicador_del_reactivo = int(input("ingrese el id del reactivo que desea configurar: "))
             if auxiliador == 2:
                 self.reactivo_a_configurar = Gestion_de_Reactivos.Analizador_de_Informacion_Reactivo(self,indicador_del_reactivo,2)
                 return "Se a editado el reactivo con exito"
@@ -193,9 +194,10 @@ class Gestion_de_Reactivos(__Reactivos):
         else:
             print("Todo en orden")
 
-    def Cambiar_la_UnidadMedida(self,indicador_del_reactivo):
+    def Cambiar_la_UnidadMedida(self):
         #Este metodo se encarga de cambiar la unidad de medicion de un reactivo en especifico.
         #El parametro indicador_del_reactivo es el id del reactivo que se desea cambiar la unidad de medicion.
+        indicador_del_reactivo = int(input("Ingrese el ID del reactivo que deseas cambiar de unidad: "))
         Gestion_de_Reactivos.Analizador_de_Informacion_Reactivo(self,indicador_del_reactivo, 5)
         for i in self._reactivo:
             if i.get("id") == indicador_del_reactivo:
@@ -222,6 +224,10 @@ class Gestion_de_Reactivos(__Reactivos):
             unidad = input("Escribe la unidad de conversion: ")
             factor = float(input("Escribe el factor: "))
             self._conversiones_posibles.append({"unidad": unidad, "factor": factor})
+
+            option = input("Estos son todas las converrsiones posibles?\n(1-si/2-no)\n-------->?")
+            if option == "1":
+                break
 
             option = input("Estos son todas las converrsiones posibles?\n(1-si/2-no)\n-------->?")
             if option == "1":
