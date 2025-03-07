@@ -16,7 +16,7 @@ class __Reactivos:
         self._fecha_de_caducidad = None
         self._minimo_sugerido = None
         self._conversiones_posibles = None
-        self._reactivo = []
+        self._reactivos = []
 
     def Lector_de_Datos(self):
         api = _Lector_de_APIS("https://raw.githubusercontent.com/Algoritmos-y-Programacion/api-proyecto/refs/heads/main/reactivos.json", 2)
@@ -25,6 +25,6 @@ class __Reactivos:
         informacion_del_archivo = archivo.readlines()
         for s in informacion_del_archivo:
             s = json.loads(s)
-            self._reactivo.append(s)
+            self._reactivos.append(s)
         archivo.close()
 

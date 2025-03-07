@@ -12,7 +12,7 @@ class __Receta:
         self._reactivos_utilizados = []
         self._procedimiento = []
         self._valores_a_medir = []
-        self._receta = []
+        self._recetas = []
 
     def Lector_de_Datos(self):
         api = _Lector_de_APIS("https://raw.githubusercontent.com/Algoritmos-y-Programacion/api-proyecto/refs/heads/main/recetas.json", 1)

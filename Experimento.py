@@ -12,7 +12,7 @@ class __Experimnto:
         self._fecha = None
         self._costo_asociado = None
         self._resultado = None
-        self._experimento = []
+        self._experimentos = []
 
     def Lector_de_Datos(self):
         api = _Lector_de_APIS("https://raw.githubusercontent.com/Algoritmos-y-Programacion/api-proyecto/refs/heads/main/experimentos.json", 3)

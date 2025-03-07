@@ -3,7 +3,7 @@ import json
 
 #Modulo que se encarga de gestionar los reactivos, agregar, editar, eliminar, cambiar la unidad de medicion y ver el estatus de los reactivos
 #Heredo todos los atributos y metodos de la clase __Reactivos
-
+#Arreglar codigo utilizar update, remove y en editar y eliminar
 class Gestion_de_Reactivos(__Reactivos):
     def __init__(self):
         super().__init__()
@@ -22,7 +22,7 @@ class Gestion_de_Reactivos(__Reactivos):
         advertensia = []
         self.advise = False
 
-        for s in self._reactivo:
+        for s in self._reactivos:
             self._id_reactivo = s.get("id")
             self._nombre = s.get("nombre")
             self._descripcion = s.get("descripcion")
@@ -138,14 +138,13 @@ class Gestion_de_Reactivos(__Reactivos):
                     archivo = open("Reactivos.json","a", encoding = "utf-8")
                     archivo.write(f"{aux}\n")
                     
-
         if accion == 2 or accion == 3 or accion == 5:
 
             #Ayuda a los metodos Agregar_Editar_o_Eliminar_Reactivo y Cambiar_la_UnidadMedida.
             #Se encarga de guardar los cambios en la lista de reactivos. 
 
-            self._reactivo = []
-            self._reactivo = reactivo_copia
+            self._reactivos = []
+            self._reactivos = reactivo_copia
             archivo.close()
         
         elif accion == 4:
@@ -161,14 +160,14 @@ class Gestion_de_Reactivos(__Reactivos):
         #Si auxiliador es 3, se elimina un reactivo.
         auxiliador = int(input("Que deseas Realiza\n1-Agregar\n2-Editar\n3-Eliminar\n--------->"))
         if auxiliador == 1:
-            for s in self._reactivo:
+            for s in self._reactivos:
                 self._id_reactivo = max(s.get("id"))+1
                 break
             self._id_reactivo = self._id_reactivo+ + 1
             Gestion_de_Reactivos.Configurar_Reactivo(self)
             archivo = open("Reactivos.json","a", encoding = "utf-8")
             aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles }
-            self._reactivo.append(aux)
+            self._reactivos.append(aux)
             aux = json.dumps(aux)
             archivo.write(f"{aux}\n")
             archivo.close()
@@ -199,7 +198,7 @@ class Gestion_de_Reactivos(__Reactivos):
         #El parametro indicador_del_reactivo es el id del reactivo que se desea cambiar la unidad de medicion.
         indicador_del_reactivo = int(input("Ingrese el ID del reactivo que deseas cambiar de unidad: "))
         Gestion_de_Reactivos.Analizador_de_Informacion_Reactivo(self,indicador_del_reactivo, 5)
-        for i in self._reactivo:
+        for i in self._reactivos:
             if i.get("id") == indicador_del_reactivo:
                 for s in i: 
                     print(f"{s}: {i.get(s)}")
