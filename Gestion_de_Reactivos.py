@@ -229,7 +229,3 @@ class Gestion_de_Reactivos(__Reactivos):
             if option == "1":
                 break
 
-            option = input("Estos son todas las converrsiones posibles?\n(1-si/2-no)\n-------->?")
-            if option == "1":
-                break
-
