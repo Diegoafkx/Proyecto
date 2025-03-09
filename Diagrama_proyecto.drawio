@@ -29,7 +29,7 @@
           <mxGeometry y="198" width="290" height="92" as="geometry" />
         </mxCell>
         <mxCell id="yadymEA7RUQ70bokF_j9-51" value="Gestion de Experimentos" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="420" y="-744" width="320" height="320" as="geometry" />
+          <mxGeometry x="420" y="-744" width="320" height="290" as="geometry" />
         </mxCell>
         <mxCell id="yyuxzGuzA3rOYkuHmAD6-1" value="#id_experimento: int&lt;div&gt;#receta_id: int&lt;/div&gt;&lt;div&gt;#personas responsables: personas[]&lt;/div&gt;&lt;div&gt;#fecha: string&lt;/div&gt;&lt;div&gt;#costo asociado: int&lt;/div&gt;&lt;div&gt;#resultado: string&lt;/div&gt;&lt;div&gt;#id_receta: int&lt;div&gt;#nombre: string&lt;/div&gt;&lt;div&gt;#objetivo: string&lt;/div&gt;&lt;div&gt;#reactivos utilizados: reactivos[]&lt;/div&gt;&lt;div&gt;#procedimiento: prosesos[]&lt;/div&gt;&lt;div&gt;#valores_a_medir: valores[]&lt;/div&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="yadymEA7RUQ70bokF_j9-51" vertex="1">
           <mxGeometry y="26" width="320" height="184" as="geometry" />
@@ -37,8 +37,8 @@
         <mxCell id="yadymEA7RUQ70bokF_j9-53" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="yadymEA7RUQ70bokF_j9-51" vertex="1">
           <mxGeometry y="210" width="320" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="os_pkaWNRZKT6Vy84ycI-11" value="+Analizador_de_Informacion_Receta(): receta[]&lt;div&gt;+Analizador_de_Experimento(): experimento[]&lt;/div&gt;&lt;div&gt;+Agregar_Editar_o_Eliminar_Experimento(): string&lt;/div&gt;&lt;div&gt;+Pre_preparacion_Del_Experimento(): pre_preparacion[]&lt;/div&gt;&lt;div&gt;+Get_Resultado(): resultado[]&lt;/div&gt;&lt;div&gt;+Configurar_Experimento()&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="yadymEA7RUQ70bokF_j9-51" vertex="1">
-          <mxGeometry y="218" width="320" height="102" as="geometry" />
+        <mxCell id="os_pkaWNRZKT6Vy84ycI-11" value="+Analizador_de_Informacion_Receta(): receta[]&lt;div&gt;+Analizador_de_Experimento(): experimento[]&lt;/div&gt;&lt;div&gt;+Agregar_Editar_o_Eliminar_Experimento(): string&lt;/div&gt;&lt;div&gt;+Configurar_Experimento()&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="yadymEA7RUQ70bokF_j9-51" vertex="1">
+          <mxGeometry y="218" width="320" height="72" as="geometry" />
         </mxCell>
         <mxCell id="yadymEA7RUQ70bokF_j9-55" value="Gestion de Resultados" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="360" y="-350" width="270" height="144" as="geometry" />
