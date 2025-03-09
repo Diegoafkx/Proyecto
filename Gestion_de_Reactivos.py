@@ -98,13 +98,26 @@ class Gestion_de_Reactivos(__Reactivos):
                     if mas_de_una_conversion == True:
                         self._conversiones_posibles= conversiones
                         self._conversiones_posibles.append({"unidad": unidad, "factor": factor})
+
+            if accion == 6:
+                for s in indicador_del_reactivo:
+                    if self._id_reactivo == s.get("id"):
+                        
+                        if self._inventario_disponible >= s.get("cantidad_necesaria"):
                     
-        if accion == 2 or accion == 3 or accion == 5:
+                            self._inventario_disponible = self._inventario_disponible - s.get("cantidad_necesaria")
+
+                        
+                    
+                aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles }
+                reactivo_copia.append(aux)
+
+        if accion == 2 or accion == 3 or accion == 5 or accion == 6:
 
             #Ayuda a los metodos Agregar_Editar_o_Eliminar_Reactivo y Cambiar_la_UnidadMedida.
             #Se encarga de guardar los cambios en la lista de reactivos. 
-            self._reactivos = []
             self._reactivos = reactivo_copia
+            Gestion_de_Reactivos.Configurar_json(self)
         
         if accion == 4:
             #Este retorna una lista con los reactivos que tienen menos de la cantidad minima sugerida, para que se imprima en el metodo Estatus_de_los_Reactivos.
@@ -130,16 +143,14 @@ class Gestion_de_Reactivos(__Reactivos):
             indicador_del_reactivo = int(input("ingrese el id del reactivo que desea configurar: "))
             if auxiliador == 2:
                 self.reactivo_a_configurar = Gestion_de_Reactivos.Analizador_de_Informacion_Reactivo(self,indicador_del_reactivo,2)
-                Gestion_de_Reactivos.Configurar_json(self)
                 return "Se a editado el reactivo con exito"
             else:
                 self.reactivo_a_configurar = Gestion_de_Reactivos.Analizador_de_Informacion_Reactivo(self,indicador_del_reactivo,3)
-                Gestion_de_Reactivos.Configurar_json(self)
                 return "Se a eliminado el reactivo con exito"
 
     def Estatus_de_los_Reactivos(self):
         #Este metodo se encarga de ver el estatus de los reactivos, si hay alguno que tenga menos de la cantidad minima sugerida.
-        advertensia = Gestion_de_Reactivos.Analizador_de_Informacion_Reactivo(self,0,False,4)
+        advertensia = Gestion_de_Reactivos.Analizador_de_Informacion_Reactivo(self,0,False,4, None)
         if self.advise == True:
             print("-------ADVERTENCIA-----")
             for s in advertensia:
@@ -153,7 +164,6 @@ class Gestion_de_Reactivos(__Reactivos):
         #El parametro indicador_del_reactivo es el id del reactivo que se desea cambiar la unidad de medicion.
         indicador_del_reactivo = int(input("Ingrese el ID del reactivo que deseas cambiar de unidad: "))
         Gestion_de_Reactivos.Analizador_de_Informacion_Reactivo(self,indicador_del_reactivo, 5)
-        Gestion_de_Reactivos.Configurar_json(self)
         for i in self._reactivos:
             if i.get("id") == indicador_del_reactivo:
                 for s in i: 
@@ -193,7 +203,3 @@ class Gestion_de_Reactivos(__Reactivos):
             archivo.close()
             archivo = open("Reactivos.json","a", encoding = "utf-8")
         archivo.close()
-
-    def Reactivo_a_Utilizar(self,inficador_del_reactivo):
-        #Este metodo se encarga de retornar el reactivo que se desea utilizar en un experimento.
-        return Gestion_de_Reactivos.Analizador_de_Informacion_Reactivo(self,inficador_del_reactivo,1)

@@ -41,7 +41,7 @@ class Gestion_de_Experimentos(__Experimnto_y_Receta):
         if accion == 2 or accion == 3:
             self._experimentos = experimentos_copia
                 
-    def Analizador_de_Informacion_Recetas(self,indicador_de_receta,accion):
+    def Analizador_de_Informacion_Recetas(self,indicador_de_receta):
         for s in self._recetas:
             self._id_receta = s.get("id")
             self._nombre = s.get("nombre")
@@ -50,15 +50,9 @@ class Gestion_de_Experimentos(__Experimnto_y_Receta):
             self._procedimiento = s.get("procedimiento")
             self._valores_a_medir = s.get("valores_a_medir")
             
-            
-            if accion == 1:
-                if self._id_receta == indicador_de_receta:
-                    return s
-            
-            elif accion == 2:
-                if self._id_receta == self._receta_id:
-                    return s
-            
+            if self._id_receta == indicador_de_receta:
+                break
+                   
     def Agregar_Editar_o_Eliminar_Experimento(self,):
         accion = int(input("Que deseas realizar\n1-Agregar\n2-Editar\3-Eliminar"))
         if accion == 1:
@@ -97,12 +91,13 @@ class Gestion_de_Experimentos(__Experimnto_y_Receta):
 
     def Hacer_Experimento(self):
         self._id_receta = int(input("Ingresa el ID de la receta que vas a utilizar: "))
-        self._receta = Gestion_de_Experimentos.Analizador_de_Informacion_Recetas(self,self._id_receta,1)
-        print(f"Receta: {self._receta}")
-        print(f"Objetivo: {self._receta.get('objetivo')}")
-        print(f"Reactivos utilizados: {self._receta.get('reactivos_utilizados')}")
-        print(f"Procedimiento: {self._receta.get('procedimiento')}")
-        print(f"Valores a medir: {self._receta.get('valores_a_medir')}")
+        Gestion_de_Experimentos.Analizador_de_Informacion_Recetas(self,self._id_receta)
+        print(f"Receta: {self._nombre}")
+        print(f"Objetivo: {self._objetivo}")
+        print(f"Reactivos utilizados: {self._reactivos_utilizados}")
+        print(f"Procedimiento: {self._procedimiento}")
+        print(f"Valores a medir: {self._valores_a_medir}")
+        receta = Gestion_de_Experimentos.Analizador_de_Informacion_Recetas(self,self._reactivos_utilizados,1)
         self._personas_responsables = []
         self._personas_responsables.append((input("Ingrese las personas responsables del proyecto: ").split(",")))
         
