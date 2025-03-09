@@ -16,8 +16,6 @@ class Gestion_de_Reactivos(__Reactivos):
         #El valor que recibe el parametro accion es el que determina cual es el metodo que esta auxiliando.
 
         conversiones = []
-        ya_paso = True
-        fist_time = True
         reactivo_copia = []
         advertensia = []
         self.advise = False
@@ -46,42 +44,18 @@ class Gestion_de_Reactivos(__Reactivos):
                     Gestion_de_Reactivos.Configurar_Reactivo(self)
                 aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles }
                 reactivo_copia.append(aux)
-                aux = json.dumps(aux)
-                if fist_time == True:
-                    archivo = open("Reactivos.json","w", encoding = "utf-8")
-                    archivo.write(f"{aux}\n")
-                    fist_time = False
-                else:
-                    archivo = open("Reactivos.json","a", encoding = "utf-8")
-                    archivo.write(f"{aux}\n")
 
             elif accion == 3:
                 #esta auxilia al metodo Agregar_Editar_o_Eliminar_Reactivo.
                 #Esta se encarga de eliminar un reactivo en especifico.
                 if indicador_del_reactivo == self._id_reactivo:
-                    ya_paso = False
-                elif indicador_del_reactivo != self._id_reactivo and ya_paso == True:
-                    aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles }
-                    reactivo_copia.append(aux)
-                    aux = json.dumps(aux)
-                    if fist_time == True:
-                        archivo = open("Reactivos.json","w", encoding = "utf-8")
-                        archivo.write(f"{aux}\n")
-                        fist_time = False
+                    pass
+                else:
+                    if indicador_del_reactivo < self._id_reactivo:
+                        aux = {"id":self._id_reactivo - 1,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles}
                     else:
-                        archivo = open("Reactivos.json","a", encoding = "utf-8")
-                        archivo.write(f"{aux}\n")
-                elif indicador_del_reactivo != self._id_reactivo and ya_paso == False:
-                    aux = {"id":self._id_reactivo - 1,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles }
+                        aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles}
                     reactivo_copia.append(aux)
-                    aux = json.dumps(aux)
-                    if fist_time == True:
-                        archivo = open("Reactivos.json","w", encoding = "utf-8")
-                        archivo.write(f"{aux}\n")
-                        fist_time = False
-                    else:
-                        archivo = open("Reactivos.json","a", encoding = "utf-8")
-                        archivo.write(f"{aux}\n")
                 
             elif accion == 4:
                 #Esta accion axulia al metodo Estatus_de_los_Reactivos, buscando que reactivos tienen menos de la cantidad minima sugerida.
@@ -125,61 +99,42 @@ class Gestion_de_Reactivos(__Reactivos):
                         self._conversiones_posibles= conversiones
                         self._conversiones_posibles.append({"unidad": unidad, "factor": factor})
                     
-                    
-
-                aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles }
-                reactivo_copia.append(aux)
-                aux = json.dumps(aux)
-                if fist_time == True:
-                    archivo = open("Reactivos.json","w", encoding = "utf-8")
-                    archivo.write(f"{aux}\n")
-                    fist_time = False
-                else:
-                    archivo = open("Reactivos.json","a", encoding = "utf-8")
-                    archivo.write(f"{aux}\n")
-                    
         if accion == 2 or accion == 3 or accion == 5:
 
             #Ayuda a los metodos Agregar_Editar_o_Eliminar_Reactivo y Cambiar_la_UnidadMedida.
             #Se encarga de guardar los cambios en la lista de reactivos. 
-
             self._reactivos = []
             self._reactivos = reactivo_copia
-            archivo.close()
         
-        elif accion == 4:
+        if accion == 4:
             #Este retorna una lista con los reactivos que tienen menos de la cantidad minima sugerida, para que se imprima en el metodo Estatus_de_los_Reactivos.
             return advertensia
     
-    def Agregar_Editar_o_Eliminar_Reactivo(self):
+    def Agregar_Editar_o_Eliminar_Reactivo(self,auxiliador):
         #Este metodo se encarga de agregar, editar o eliminar un reactivo.
         #El parametro indicador_del_reactivo es el id del reactivo que se desea editar o eliminar.
         #El parametro auxiliador es el que determina que accion se va a realizar, esto para que el metodo Analizador_de_Informacion_Reactivo sepa que hacer.
         #Si auxiliador es 1, se agrega un reactivo.
         #Si auxiliador es 2, se edita un reactivo.
         #Si auxiliador es 3, se elimina un reactivo.
-        auxiliador = int(input("Que deseas Realiza\n1-Agregar\n2-Editar\n3-Eliminar\n--------->"))
         if auxiliador == 1:
             for s in self._reactivos:
                 self._id_reactivo = max(s.get("id"))+1
                 break
             self._id_reactivo = self._id_reactivo+ + 1
             Gestion_de_Reactivos.Configurar_Reactivo(self)
-            archivo = open("Reactivos.json","a", encoding = "utf-8")
-            aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles }
-            self._reactivos.append(aux)
-            aux = json.dumps(aux)
-            archivo.write(f"{aux}\n")
-            archivo.close()
+            Gestion_de_Reactivos.Configurar_json(self)
             return "se agrego el reactivo exitosamente."
 
         elif auxiliador == 2 or auxiliador == 3:
             indicador_del_reactivo = int(input("ingrese el id del reactivo que desea configurar: "))
             if auxiliador == 2:
                 self.reactivo_a_configurar = Gestion_de_Reactivos.Analizador_de_Informacion_Reactivo(self,indicador_del_reactivo,2)
+                Gestion_de_Reactivos.Configurar_json(self)
                 return "Se a editado el reactivo con exito"
             else:
                 self.reactivo_a_configurar = Gestion_de_Reactivos.Analizador_de_Informacion_Reactivo(self,indicador_del_reactivo,3)
+                Gestion_de_Reactivos.Configurar_json(self)
                 return "Se a eliminado el reactivo con exito"
 
     def Estatus_de_los_Reactivos(self):
@@ -198,6 +153,7 @@ class Gestion_de_Reactivos(__Reactivos):
         #El parametro indicador_del_reactivo es el id del reactivo que se desea cambiar la unidad de medicion.
         indicador_del_reactivo = int(input("Ingrese el ID del reactivo que deseas cambiar de unidad: "))
         Gestion_de_Reactivos.Analizador_de_Informacion_Reactivo(self,indicador_del_reactivo, 5)
+        Gestion_de_Reactivos.Configurar_json(self)
         for i in self._reactivos:
             if i.get("id") == indicador_del_reactivo:
                 for s in i: 
@@ -228,3 +184,16 @@ class Gestion_de_Reactivos(__Reactivos):
             if option == "1":
                 break
 
+    def Configurar_json(self):
+
+        archivo = open("Reactivos.json","w", encoding = "utf-8")
+        for s in self._reactivos:
+            aux = json.dumps(s)
+            archivo.write(f"{aux}\n")
+            archivo.close()
+            archivo = open("Reactivos.json","a", encoding = "utf-8")
+        archivo.close()
+
+    def Reactivo_a_Utilizar(self,inficador_del_reactivo):
+        #Este metodo se encarga de retornar el reactivo que se desea utilizar en un experimento.
+        return Gestion_de_Reactivos.Analizador_de_Informacion_Reactivo(self,inficador_del_reactivo,1)
