@@ -1,6 +1,7 @@
 import random
 from Experimento_y_Recetas import __Experimnto_y_Receta
 import json
+from Gestion_de_Reactivos import Gestion_de_Reactivos 
 
 class Gestion_de_Experimentos(__Experimnto_y_Receta):
     def __init__(self):
@@ -90,6 +91,10 @@ class Gestion_de_Experimentos(__Experimnto_y_Receta):
         archivo.close()
 
     def Hacer_Experimento(self):
+<<<<<<< HEAD
+        first_time = True
+=======
+>>>>>>> a4ef9a0131a2fde9390bdf67dbbb2b0edc2a7e79
         self._id_receta = int(input("Ingresa el ID de la receta que vas a utilizar: "))
         Gestion_de_Experimentos.Analizador_de_Informacion_Recetas(self,self._id_receta)
         print(f"Receta: {self._nombre}")
@@ -97,6 +102,19 @@ class Gestion_de_Experimentos(__Experimnto_y_Receta):
         print(f"Reactivos utilizados: {self._reactivos_utilizados}")
         print(f"Procedimiento: {self._procedimiento}")
         print(f"Valores a medir: {self._valores_a_medir}")
+<<<<<<< HEAD
+        while True:
+            costo = Gestion_de_Reactivos.Experimento(self,self._reactivos_utilizados)
+            self._costo_asociado = sum(costo)
+            self._personas_responsables = []
+            self._personas_responsables.append((input("Ingrese las personas responsables del proyecto: ").split(",")))
+            if first_time == True:
+                error_probable = random.randint(0,1,22.5)
+                print(f"Ha surgido un error: {error_probable}")
+        
+
+
+=======
         receta = Gestion_de_Experimentos.Analizador_de_Informacion_Recetas(self,self._reactivos_utilizados,1)
         self._personas_responsables = []
         self._personas_responsables.append((input("Ingrese las personas responsables del proyecto: ").split(",")))
@@ -106,3 +124,4 @@ hola = Gestion_de_Experimentos()
 print(hola)
 while True:
     hola.Agregar_Editar_o_Eliminar_Experimento()
+>>>>>>> a4ef9a0131a2fde9390bdf67dbbb2b0edc2a7e79
