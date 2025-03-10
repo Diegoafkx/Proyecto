@@ -55,12 +55,16 @@ class Gestion_de_Experimentos(__Experimnto_y_Receta):
             if self._id_receta == indicador_de_receta:
                 break
                    
-    def Agregar_Editar_o_Eliminar_Experimento(self,):
-        accion = int(input("Que deseas realizar\n1-Agregar\n2-Editar\3-Eliminar"))
+    def Agregar_Editar_o_Eliminar_Experimento(self,accion):
+        
         if accion == 1:
             for s in self._experimentos:    
                 self._id_experimento = max(s.get("id")) + 1
-            
+                break
+            Gestion_de_Experimentos.Hacer_Experimento(self)
+            aux = {"id":self._id_experimento,"receta_id":self._receta_id,"personas_responsables":self._personas_responsables,"fecha":self._fecha ,"costo_asociado":self._costo_asociado ,"resultado":self._resultado}
+            self._experimentos.append(aux)
+            Gestion_de_Experimentos.Configurar_json(self)
 
         elif accion == 2:
             self._id_experimento = int(input("Ingresa el ID del experimento que deseas editar: "))
@@ -75,7 +79,7 @@ class Gestion_de_Experimentos(__Experimnto_y_Receta):
             return "se edito el experimento exitosamente."
     
     def Configurar_Experimento(self):
-        self._id_receta_buscador = int(input("Ingresa el ID de la receta que vas a utilizar: "))
+        self._id_receta = int(input("Ingresa el ID de la receta que vas a utilizar: "))
         self._personas_responsables = []
         self._personas_responsables.append((input("Ingrese las personas responsables del proyecto: ").split(",")))
         self._fecha = input("Ingresa la fecha: ")
@@ -92,7 +96,10 @@ class Gestion_de_Experimentos(__Experimnto_y_Receta):
         archivo.close()
 
     def Hacer_Experimento(self):
-        first_time = True
+        maximo= []
+        minimo = []
+        margen_de_resultado = []
+        x = []
         self._id_receta = int(input("Ingresa el ID de la receta que vas a utilizar: "))
         self._personas_responsables.append((input("Ingrese las personas responsables del proyecto: ").split(",")))
         self._fecha = input("Ingresa la fecha: ")
@@ -105,22 +112,37 @@ class Gestion_de_Experimentos(__Experimnto_y_Receta):
         margen_de_error = random.randint(0.1,22.5)
         costo = Gestion_de_Reactivos.Experimento(self,self._reactivos_utilizados)
         self._costo_asociado = sum(costo)
-        minimo = self._valores_a_medir.get("minimo")
-        maximo = self._valores_a_medir.get("maximo")
-        margen_de_error =random.randint(0.1,22.5)
-        resultado = minimo + ((maximo * margen_de_error)/100)
-        if minimo <= resultado or resultado <= maximo:
+        
+        
+        for s in self._valores_a_medir:
+            minimo.append(s.get("minimo"))
+            maximo.append(s.get("maximo"))
 
-            self._resultado = "Exitoso"
+        margen_de_error =random.uniform(0.1,22.5)    
+        formula_de_resultado = random.choice(1,2)
+        aux = 0 
+        for aux in range(len(self._valores_a_medir)):
+            if formula_de_resultado == 1:
+                margen_de_resultado.append((minimo[aux]+ ((maximo[aux]* margen_de_error)/100)))
+            else:    
+                margen_de_resultado.append((maximo[aux] - (( maximo[aux]* margen_de_error)/100)))
+            
+            
+        if minimo <= margen_de_resultado or margen_de_resultado <= maximo:
+            fallo= False
+            resultado = "Dentro del rango esperado"
         else:
-            self._resultado = "Fracaso"
-            aux = self._reactivos_utilizados
-            Gestion_de_Reactivos
-        
-        
-            
-            
-        
-        
-
-
+            fallo = True
+            if minimo > margen_de_resultado:
+                resultado = "El resultado fue menor al minimo esperado"
+            else:
+                resultado = "El resultado fue mayor al maximo esperado"
+        Gestion_de_Reactivos.Experimento(self,self._reactivos_utilizados)
+        if fallo == True:
+            self._costo_asociado =+ margen_de_error
+        aux = 0 
+        for aux in range(len(self._valores_a_medir)):
+            x.append({self._valores_a_medir.get('nombre'): {margen_de_resultado}})
+        for aux in x:
+            valores_x = ', '.join([f"{list(aux.keys())[0]}: {list(aux.values())[0]}" ])
+        self._resultado = f"{valores_x}: {margen_de_resultado}. {resultado}"

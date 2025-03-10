@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 from Lector_de_APIS import _Lector_de_APIS 
 import json
 
@@ -40,7 +40,7 @@ class __Experimnto_y_Receta:
             s = json.loads(s)
             self._recetas.append(s)
         archivo.close()
-=======
+
 from Lector_de_APIS import _Lector_de_APIS 
 import json
 
@@ -82,4 +82,4 @@ class __Experimnto_y_Receta:
             s = json.loads(s)
             self._recetas.append(s)
         archivo.close()
->>>>>>> a4ef9a0131a2fde9390bdf67dbbb2b0edc2a7e79
+
