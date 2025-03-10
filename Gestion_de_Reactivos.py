@@ -40,7 +40,9 @@ class Gestion_de_Reactivos(__Reactivos):
 
             elif accion == 1:
                 if indicador_del_reactivo == self._id_reactivo:
-                    self._inventario_disponible = int(input("Escribe la cantidad de inventario disponible: "))
+                    print(f"La Cantidad disponible es: {self._inventario_disponible}")
+                    self._inventario_disponible = self._inventario_disponible + int(input("Cuanta cantidad que desea sumarles: "))
+                    print(f"La cantidad disponible ahora es: {self._inventario_disponible}")
                 aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles }
                 reactivo_copia.append(aux)
             
@@ -108,7 +110,6 @@ class Gestion_de_Reactivos(__Reactivos):
 
             if accion == 6:
                 for s in indicador_del_reactivo:
-<<<<<<< HEAD
                     if self._id_reactivo == s.get("reactivo_id"):
                         while True:
                             if self._unidad_de_medicion == s.get("unidad_medida"):
@@ -126,20 +127,6 @@ class Gestion_de_Reactivos(__Reactivos):
                 reactivo_copia.append(aux)
 
         if accion == 1 and accion == 2 or accion == 3 or accion == 5 or accion == 6:
-=======
-                    if self._id_reactivo == s.get("id"):
-                        
-                        if self._inventario_disponible >= s.get("cantidad_necesaria"):
-                    
-                            self._inventario_disponible = self._inventario_disponible - s.get("cantidad_necesaria")
-
-                        
-                    
-                aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles }
-                reactivo_copia.append(aux)
-
-        if accion == 2 or accion == 3 or accion == 5 or accion == 6:
->>>>>>> a4ef9a0131a2fde9390bdf67dbbb2b0edc2a7e79
 
             #Ayuda a los metodos Agregar_Editar_o_Eliminar_Reactivo y Cambiar_la_UnidadMedida.
             #Se encarga de guardar los cambios en la lista de reactivos. 
@@ -150,11 +137,7 @@ class Gestion_de_Reactivos(__Reactivos):
             #Este retorna una lista con los reactivos que tienen menos de la cantidad minima sugerida, para que se imprima en el metodo Estatus_de_los_Reactivos.
             return advertensia
     
-<<<<<<< HEAD
     def Agregar_Editar_o_Eliminar_Reactivo(self,auxiliador,indicador_del_reactivo):
-=======
-    def Agregar_Editar_o_Eliminar_Reactivo(self,auxiliador):
->>>>>>> a4ef9a0131a2fde9390bdf67dbbb2b0edc2a7e79
         #Este metodo se encarga de agregar, editar o eliminar un reactivo.
         #El parametro indicador_del_reactivo es el id del reactivo que se desea editar o eliminar.
         #El parametro auxiliador es el que determina que accion se va a realizar, esto para que el metodo Analizador_de_Informacion_Reactivo sepa que hacer.
@@ -162,7 +145,6 @@ class Gestion_de_Reactivos(__Reactivos):
         #Si auxiliador es 2, se edita un reactivo.
         #Si auxiliador es 3, se elimina un reactivo.
         if auxiliador == 1:
-<<<<<<< HEAD
             if indicador_del_reactivo != 0:
                 for s in self._reactivos:
                     self._id_reactivo = max(s.get("id"))+1
@@ -175,15 +157,6 @@ class Gestion_de_Reactivos(__Reactivos):
                 Gestion_de_Reactivos.Configurar_Reactivo(self)
                 Gestion_de_Reactivos.Configurar_json(self)
                 return "se agrego el reactivo exitosamente."
-=======
-            for s in self._reactivos:
-                self._id_reactivo = max(s.get("id"))+1
-                break
-            self._id_reactivo = self._id_reactivo+ + 1
-            Gestion_de_Reactivos.Configurar_Reactivo(self)
-            Gestion_de_Reactivos.Configurar_json(self)
-            return "se agrego el reactivo exitosamente."
->>>>>>> a4ef9a0131a2fde9390bdf67dbbb2b0edc2a7e79
 
         elif auxiliador == 2 or auxiliador == 3:
             if auxiliador == 2:
@@ -247,13 +220,11 @@ class Gestion_de_Reactivos(__Reactivos):
             archivo.close()
             archivo = open("Reactivos.json","a", encoding = "utf-8")
         archivo.close()
-<<<<<<< HEAD
 
     def Experimento(self,indicador_del_reactivo):
         #Este metodo se encarga de hacer un experimento.
         #Aqui va decir si hay la cantidad necesaria o en su defecto, si es necesario hacer un cambio de unidad de medicion.
-        #El parametro indicador_del_reactivo es una lista de los reactivos que se van a utilizar en el experimento.
+        #El parametro indicador_del_reactivo es una lista de los reactivos que se van a utilizar en el experimento.s
         Gestion_de_Reactivos.Analizador_de_Informacion_Reactivo(self,indicador_del_reactivo,6)
         return self.costo
-=======
->>>>>>> a4ef9a0131a2fde9390bdf67dbbb2b0edc2a7e79
+

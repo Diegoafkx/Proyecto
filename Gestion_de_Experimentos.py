@@ -51,6 +51,7 @@ class Gestion_de_Experimentos(__Experimnto_y_Receta):
             self._procedimiento = s.get("procedimiento")
             self._valores_a_medir = s.get("valores_a_medir")
             
+            
             if self._id_receta == indicador_de_receta:
                 break
                    
@@ -91,37 +92,35 @@ class Gestion_de_Experimentos(__Experimnto_y_Receta):
         archivo.close()
 
     def Hacer_Experimento(self):
-<<<<<<< HEAD
         first_time = True
-=======
->>>>>>> a4ef9a0131a2fde9390bdf67dbbb2b0edc2a7e79
         self._id_receta = int(input("Ingresa el ID de la receta que vas a utilizar: "))
+        self._personas_responsables.append((input("Ingrese las personas responsables del proyecto: ").split(",")))
+        self._fecha = input("Ingresa la fecha: ")
         Gestion_de_Experimentos.Analizador_de_Informacion_Recetas(self,self._id_receta)
         print(f"Receta: {self._nombre}")
         print(f"Objetivo: {self._objetivo}")
         print(f"Reactivos utilizados: {self._reactivos_utilizados}")
         print(f"Procedimiento: {self._procedimiento}")
         print(f"Valores a medir: {self._valores_a_medir}")
-<<<<<<< HEAD
-        while True:
-            costo = Gestion_de_Reactivos.Experimento(self,self._reactivos_utilizados)
-            self._costo_asociado = sum(costo)
-            self._personas_responsables = []
-            self._personas_responsables.append((input("Ingrese las personas responsables del proyecto: ").split(",")))
-            if first_time == True:
-                error_probable = random.randint(0,1,22.5)
-                print(f"Ha surgido un error: {error_probable}")
+        margen_de_error = random.randint(0.1,22.5)
+        costo = Gestion_de_Reactivos.Experimento(self,self._reactivos_utilizados)
+        self._costo_asociado = sum(costo)
+        minimo = self._valores_a_medir.get("minimo")
+        maximo = self._valores_a_medir.get("maximo")
+        margen_de_error =random.randint(0.1,22.5)
+        resultado = minimo + ((maximo * margen_de_error)/100)
+        if minimo <= resultado or resultado <= maximo:
+
+            self._resultado = "Exitoso"
+        else:
+            self._resultado = "Fracaso"
+            aux = self._reactivos_utilizados
+            Gestion_de_Reactivos
+        
+        
+            
+            
+        
         
 
 
-=======
-        receta = Gestion_de_Experimentos.Analizador_de_Informacion_Recetas(self,self._reactivos_utilizados,1)
-        self._personas_responsables = []
-        self._personas_responsables.append((input("Ingrese las personas responsables del proyecto: ").split(",")))
-        
-
-hola = Gestion_de_Experimentos()
-print(hola)
-while True:
-    hola.Agregar_Editar_o_Eliminar_Experimento()
->>>>>>> a4ef9a0131a2fde9390bdf67dbbb2b0edc2a7e79
