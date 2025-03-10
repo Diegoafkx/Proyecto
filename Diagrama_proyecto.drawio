@@ -52,7 +52,7 @@
         <mxCell id="yadymEA7RUQ70bokF_j9-58" value="+Dar_Resultados():" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="yadymEA7RUQ70bokF_j9-55" vertex="1">
           <mxGeometry y="118" width="270" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="yadymEA7RUQ70bokF_j9-59" value="Indicador de Gestion" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+        <mxCell id="yadymEA7RUQ70bokF_j9-59" value="Indicadores de Gestion" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="780" y="-410" width="290" height="220" as="geometry" />
         </mxCell>
         <mxCell id="yadymEA7RUQ70bokF_j9-60" value="-reactivo: reactivo[]&lt;div&gt;-experimento: []&lt;/div&gt;&lt;div&gt;-informacion_del_experimento: informacion[]&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="yadymEA7RUQ70bokF_j9-59" vertex="1">
