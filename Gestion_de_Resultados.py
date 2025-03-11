@@ -5,6 +5,7 @@ class Gestion_de_Resultados:
         self.__experimentos = []
         self.__recetas = []
         self.__resultados = []
+        Gestion_de_Resultados.Obtener_informacion(self)
 
     def Obtener_informacion(self):
         archivo = open("Recetas.json","r", encoding = "utf-8")
@@ -28,7 +29,7 @@ class Gestion_de_Resultados:
                 else:
                     return "El Experimento si se encuentra dentro de los parametros"
 
-        for s in range(len(self.__experimentos)):
+        for bucle in range(len(self.__experimentos)):
             minimo = []
             maximo= []
             for s in self.__experimentos:
