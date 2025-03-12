@@ -17,13 +17,13 @@ class _Lector_de_APIS:
          self.url = aux.json()
         
         if self.indicador == 1:
-            archivo = open("Recetas.json","a", encoding = "utf-8")
+            archivo = open("Recetas.json","w", encoding = "utf-8")
         
         elif self.indicador == 2:
-            archivo = open("Reactivos.json","a", encoding = "utf-8")
+            archivo = open("Reactivos.json","w", encoding = "utf-8")
         
         elif self.indicador == 3:
-            archivo = open("Experimentos.json","a", encoding = "utf-8")
+            archivo = open("Experimentos.json","w", encoding = "utf-8")
 
         for s in self.url:
             archivo.write(f"{json.dumps(s)}\n")

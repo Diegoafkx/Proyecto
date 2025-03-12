@@ -8,6 +8,7 @@ class Gestion_de_Reactivos(__Reactivos):
     def __init__(self):
         super().__init__()
         Gestion_de_Reactivos.Lector_de_Datos(self)
+        Gestion_de_Reactivos.Agregar_Contadores(self)
 
     def Analizador_de_Informacion_Reactivo(self,indicador_del_reactivo,accion):
         
@@ -32,6 +33,9 @@ class Gestion_de_Reactivos(__Reactivos):
             self._fecha_de_caducidad = s.get("fecha_caducidad")
             self._minimo_sugerido = s.get("minimo_sugerido")
             self._conversiones_posibles = s.get("conversiones_posibles")
+            self._rotacion = s.get("rotacion")
+            self._veces_que_falto = s.get("veces_que_falto")
+            
             
             if accion == 0:
                 #Esta accion se encarga de enviar los datos del reactivo que se desea ver.
@@ -43,7 +47,8 @@ class Gestion_de_Reactivos(__Reactivos):
                     print(f"La Cantidad disponible es: {self._inventario_disponible}")
                     self._inventario_disponible = self._inventario_disponible + int(input("Cuanta cantidad que desea sumarles: "))
                     print(f"La cantidad disponible ahora es: {self._inventario_disponible}")
-                aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles }
+                    self._rotacion += 1
+                aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles,"rotacion": self._rotacion,"veces_que_falto": self._veces_que_falto}
                 reactivo_copia.append(aux)
             
             elif accion == 2:
@@ -51,7 +56,7 @@ class Gestion_de_Reactivos(__Reactivos):
                 #Esta se encarga de editar un reactivo en especifico.
                 if indicador_del_reactivo == self._id_reactivo:
                     Gestion_de_Reactivos.Configurar_Reactivo(self)
-                aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles }
+                aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles,"rotacion": self._rotacion,"veces_que_falto": self._veces_que_falto }
                 reactivo_copia.append(aux)
 
             elif accion == 3:
@@ -61,9 +66,9 @@ class Gestion_de_Reactivos(__Reactivos):
                     pass
                 else:
                     if indicador_del_reactivo < self._id_reactivo:
-                        aux = {"id":self._id_reactivo - 1,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles}
+                        aux = {"id":self._id_reactivo - 1,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles,"rotacion": self._rotacion,"veces_que_falto": self._veces_que_falto}
                     else:
-                        aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles}
+                        aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles,"rotacion": self._rotacion,"veces_que_falto": self._veces_que_falto}
                     reactivo_copia.append(aux)
                 
             elif accion == 4:
@@ -119,11 +124,12 @@ class Gestion_de_Reactivos(__Reactivos):
                                     break
                                 else:
                                     print(f"No hay suficiente cantidad en el inventario del reactivo {self._nombre} para realizar el experimento.\nCantidad necesaria: {s.get('cantidad_necesaria')}\nCantidad en el inventario: {self._inventario_disponible}\nPor favor agrega mas cantidad al inventario")
+                                    self._veces_que_falto += 1
                                     Gestion_de_Reactivos.Agregar_Editar_o_Eliminar_Reactivo(self,2)
                             else:
                                 print(f"Es necesario hacer cambios de unidades de medicion para poder realizar el experimento.\nLa unidad de medicion del reactivo {self._nombre} es {self._unidad_de_medicion} y la cantidad necesaria es {s.get("unidad_medida")}\nRealizando cambio de medición")
                                 Gestion_de_Reactivos.Cambiar_la_UnidadMedida(self, self._id_reactivo)
-                aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles }
+                aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles,"rotacion": self._rotacion,"veces_que_falto": self._veces_que_falto }
                 reactivo_copia.append(aux)
 
         if accion == 1 and accion == 2 or accion == 3 or accion == 5 or accion == 6:
@@ -210,16 +216,6 @@ class Gestion_de_Reactivos(__Reactivos):
             option = input("Estos son todas las converrsiones posibles?\n(1-si/2-no)\n-------->?")
             if option == "1":
                 break
-
-    def Configurar_json(self):
-
-        archivo = open("Reactivos.json","w", encoding = "utf-8")
-        for s in self._reactivos:
-            aux = json.dumps(s)
-            archivo.write(f"{aux}\n")
-            archivo.close()
-            archivo = open("Reactivos.json","a", encoding = "utf-8")
-        archivo.close()
 
     def Experimento(self,indicador_del_reactivo):
         #Este metodo se encarga de hacer un experimento.
