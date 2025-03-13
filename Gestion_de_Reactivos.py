@@ -44,7 +44,7 @@ class Gestion_de_Reactivos(__Reactivos):
                     return f"Nombre: {self._nombre}\nDescripcion: {self._descripcion}\nCosto: {self._costo}\nCategoria: {self._categoria}\nInventario_disponible: {self._inventario_disponible}\nUnidad_medida: {self._unidad_de_medicion}\nFecha_caducidad: {self._fecha_de_caducidad}" 
 
             elif accion == 0:
-                print(f"Nombre: {self._nombre}\nDescripcion: {self._descripcion}\nCosto: {self._costo}\nCategoria: {self._categoria}\nInventario_disponible: {self._inventario_disponible}\nUnidad_medida: {self._unidad_de_medicion}\nFecha_caducidad: {self._fecha_de_caducidad}")
+                print(f"Nombre: {self._nombre}\nDescripcion: {self._descripcion}\nCosto: {self._costo}\nCategoria: {self._categoria}\nInventario_disponible: {self._inventario_disponible}\nUnidad_medida: {self._unidad_de_medicion}\nFecha_caducidad: {self._fecha_de_caducidad}\n------------------------------------------------------------\n")
 
             elif accion == 1:
                 if indicador_del_reactivo == self._id_reactivo:
@@ -81,7 +81,7 @@ class Gestion_de_Reactivos(__Reactivos):
                     advertensia.append([self._nombre,self._minimo_sugerido,self._inventario_disponible])
                     self.advise = True
 
-            if accion == 5:
+            elif accion == 5:
                 #Esta accion auxilia al metodo Cambiar_la_UnidadMedida, se encarga de cambiar la unidad de medicion de un reactivo en especifico.
                 if indicador_del_reactivo == self._id_reactivo:
                     if len(self._conversiones_posibles)+1 > 1:
@@ -116,6 +116,9 @@ class Gestion_de_Reactivos(__Reactivos):
                     if mas_de_una_conversion == True:
                         self._conversiones_posibles= conversiones
                         self._conversiones_posibles.append({"unidad": unidad, "factor": factor})
+                
+                aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles,"rotacion": self._rotacion,"veces_que_falto": self._veces_que_falto }
+                reactivo_copia.append(aux)
 
             if accion == 6:
                 for s in indicador_del_reactivo:
@@ -196,10 +199,10 @@ class Gestion_de_Reactivos(__Reactivos):
         Gestion_de_Reactivos.Analizador_de_Informacion_Reactivo(self,indicador_del_reactivo, 5)
         for i in self._reactivos:
             if i.get("id") == indicador_del_reactivo:
-                for s in i: 
-                    print(f"{s}: {i.get(s)}")
-                print("Se a cambiado la unidad de medicion con exito")
-            break
+                print(f"Nombre: {self._nombre}\nDescripcion: {self._descripcion}\nCosto: {self._costo}\nCategoria: {self._categoria}\nInventario_disponible: {self._inventario_disponible}\nUnidad_medida: {self._unidad_de_medicion}\nFecha_caducidad: {self._fecha_de_caducidad}")
+                return("Se a cambiado la unidad de medicion con exito")
+                
+            
 
     def Configurar_Reactivo(self):
 
