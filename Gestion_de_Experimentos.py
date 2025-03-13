@@ -86,15 +86,6 @@ class Gestion_de_Experimentos(__Experimnto_y_Receta):
         self._costo_asociado = int(input("Ingresa el costo asociado: "))
         self._resultado = input("Ingresa el resultado: ")
 
-    def Configurar_json(self):
-        archivo = open("Experimentos.json","w", encoding = "utf-8")
-        for s in self._experimentos:
-            aux = json.dumps(s)
-            archivo.write(f"{aux}\n")
-            archivo.close()
-            archivo = open("Experimentos.json","a", encoding = "utf-8")
-        archivo.close()
-
     def Hacer_Experimento(self):
         maximo= []
         minimo = []
@@ -146,3 +137,12 @@ class Gestion_de_Experimentos(__Experimnto_y_Receta):
         for aux in x:
             valores_x = ', '.join([f"{list(aux.keys())[0]}: {list(aux.values())[0]}" ])
         self._resultado = f"{valores_x}: {margen_de_resultado}. {resultado}"
+    
+    def Configurar_json(self):
+        archivo = open("Experimentos.json","w", encoding = "utf-8")
+        for s in self._experimentos:
+            aux = json.dumps(s)
+            archivo.write(f"{aux}\n")
+            archivo.close()
+            archivo = open("Experimentos.json","a", encoding = "utf-8")
+        archivo.close()

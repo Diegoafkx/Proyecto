@@ -14,7 +14,7 @@ class Gestion_de_Resultados:
             s = json.loads(s)
             self.__recetas.append(s)
         archivo.close()
-        archivo = open("Experimento.json","r", encoding = "utf-8")
+        archivo = open("Experimentos.json","r", encoding = "utf-8")
         informacion_del_archivo = archivo.readlines()
         for s in informacion_del_archivo:
             s = json.loads(s)

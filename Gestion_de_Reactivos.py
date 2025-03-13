@@ -9,6 +9,7 @@ class Gestion_de_Reactivos(__Reactivos):
         super().__init__()
         Gestion_de_Reactivos.Lector_de_Datos(self)
         Gestion_de_Reactivos.Agregar_Contadores(self)
+        Gestion_de_Reactivos.Configurar_json(self)
 
     def Analizador_de_Informacion_Reactivo(self,indicador_del_reactivo,accion):
         
@@ -40,7 +41,7 @@ class Gestion_de_Reactivos(__Reactivos):
             if accion == 0:
                 #Esta accion se encarga de enviar los datos del reactivo que se desea ver.
                 if self._id_reactivo == indicador_del_reactivo:
-                    return s 
+                    return f"Nombre: {self._nombre}\nDescripcion: {self._descripcion}\nCosto: {self._costo}\nCategoria: {self._categoria}\nInventario_disponible: {self._inventario_disponible}\nUnidad_medida: {self._unidad_de_medicion}\nFecha_caducidad: {self._fecha_de_caducidad}" 
 
             elif accion == 1:
                 if indicador_del_reactivo == self._id_reactivo:
