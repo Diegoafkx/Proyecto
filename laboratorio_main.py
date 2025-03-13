@@ -17,20 +17,52 @@ class laboratorio:
            
         while True:
             if opcion == "1":
-                print("Reactivos")
+                laboratorio.Reacts(self)
                 break
             elif opcion == "2":
-                print("Experimento")
+                laboratorio.Experiments(self)
                 break
             elif opcion == "3":
-                print("Resultados")
+                laboratorio.Results(self)
                 break
             elif opcion == "4":
-                print("Estadisticas")
+                laboratorio.Estadistics(self)
                 break
             else:
                 opcion = input(f"ERROR\n{opcion} no es una opciona valida\nPorfavor intentelo otra vez\n-------->")
+    
+    def Reacts(self):
+        opcion = input(f"-----REACTIVOS-----\n----opciones----\n1. Ver un reactivo en especifico\n2. Ver todos los reactivos\n3. Agregar reactivo\n4. Editar informacion de un reactivo\n5. Eliminar un rectivo de la base de datos\n6. Cambiar unidades de un reactivo en especifico\n------>")
+        if opcion  == "1":
+            reactivo = input("Ingresa el ID del reactivo que deseas ver\n------>")
+            print(self.__reactivos.Analizador_de_Informacion_Reactivo(reactivo,-1))
+        elif opcion == "2":
+            print("REACTIVOS:")
+            self.__reactivos.Analizador_de_Informacion_Reactivo(reactivo,0)
+        elif opcion == "3":
+            opcion = input(f"------opciones----\n1. Agregar un nuevo reactivo\n2. Restablecer un reactivo existente\n------------->")
+            if opcion == "1":
+                print(self.__experimentos.Agregar_Editar_o_Eliminar_Experimento(1,0))
+            elif opcion == "2":
+                reactivo = input("Ingresa el ID del reactivo que deseas reabastecer\n------>")
+                print(self.__experimentos.Agregar_Editar_o_Eliminar_Experimento(1,reactivo))
+        elif opcion == "4":
+            reactivo = input("Ingresa el ID del reactivo que deseas editar\n------>")
+            print(self.__experimentos.Agregar_Editar_o_Eliminar_Experimento(2,reactivo))
+        elif opcion == "5":
+            reactivo = input("Ingresa el ID del reactivo que deseas eliminar\n------>")
+            print(self.__experimentos.Agregar_Editar_o_Eliminar_Experimento(3,reactivo))
+        elif opcion == "6":
+            reactivo = input("Ingresa el ID del reactivo que deseas cambiar las unidades de medicion\n------>")
+            
+    def Experiments(self):
+        opcion = input(f"-----EXPERIMENTOS-----\n----opciones----\n1. Ver un experimento en especifico\n2. Ver todos los experimnetos\n3. Ver una recetas en especifico\n4. Ver todas las recetas\n5. Hacer un experimento\n6. Editar informacion de un experimento\n7. Eliminar un experimento de la base de datos\n------>")
 
+    def Results(self):
+        opcion = input(f"-----RESULTADOS-----\nA continuacion se veran si los resultados de los experimentos ubicados en la base de datos esta dentro o fuera de los parametros.")
+
+    def Estadistics(self):
+        opcion = input("-----ESTADISTICAS-----\n----opciones----\n1. Ver los investigadores que mas utilizan el laboratorio\n2. Ver el experimento mayor y menor hecho\n3. Ver los 5 reactivos con mayor rotacion (veces que se reabastecio el reactivo)\n4. Ver los 3 reactivos con mayor perdida\n5. Ver los reactivos que mas se vecen\n6. Ver cuantas veces no se pudo hacer un experimento por falta de reactivos\n7. Ver grafica con todas las estadisticas\n------>")
 
 lab =laboratorio()
 lab.Main()

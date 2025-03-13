@@ -38,10 +38,13 @@ class Gestion_de_Reactivos(__Reactivos):
             self._veces_que_falto = s.get("veces_que_falto")
             
             
-            if accion == 0:
+            if accion == -1:
                 #Esta accion se encarga de enviar los datos del reactivo que se desea ver.
                 if self._id_reactivo == indicador_del_reactivo:
                     return f"Nombre: {self._nombre}\nDescripcion: {self._descripcion}\nCosto: {self._costo}\nCategoria: {self._categoria}\nInventario_disponible: {self._inventario_disponible}\nUnidad_medida: {self._unidad_de_medicion}\nFecha_caducidad: {self._fecha_de_caducidad}" 
+
+            elif accion == 0:
+                print(f"Nombre: {self._nombre}\nDescripcion: {self._descripcion}\nCosto: {self._costo}\nCategoria: {self._categoria}\nInventario_disponible: {self._inventario_disponible}\nUnidad_medida: {self._unidad_de_medicion}\nFecha_caducidad: {self._fecha_de_caducidad}")
 
             elif accion == 1:
                 if indicador_del_reactivo == self._id_reactivo:
@@ -132,15 +135,18 @@ class Gestion_de_Reactivos(__Reactivos):
                                 Gestion_de_Reactivos.Cambiar_la_UnidadMedida(self, self._id_reactivo)
                 aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles,"rotacion": self._rotacion,"veces_que_falto": self._veces_que_falto }
                 reactivo_copia.append(aux)
+        
+        if accion == 0:
+            return f"No hay reactivo con el ID{indicador_del_reactivo}"
 
-        if accion == 1 and accion == 2 or accion == 3 or accion == 5 or accion == 6:
+        elif accion == 1 and accion == 2 or accion == 3 or accion == 5 or accion == 6:
 
             #Ayuda a los metodos Agregar_Editar_o_Eliminar_Reactivo y Cambiar_la_UnidadMedida.
             #Se encarga de guardar los cambios en la lista de reactivos. 
             self._reactivos = reactivo_copia
             Gestion_de_Reactivos.Configurar_json(self)
         
-        if accion == 4:
+        elif accion == 4:
             #Este retorna una lista con los reactivos que tienen menos de la cantidad minima sugerida, para que se imprima en el metodo Estatus_de_los_Reactivos.
             return advertensia
     
@@ -152,11 +158,11 @@ class Gestion_de_Reactivos(__Reactivos):
         #Si auxiliador es 2, se edita un reactivo.
         #Si auxiliador es 3, se elimina un reactivo.
         if auxiliador == 1:
-            if indicador_del_reactivo != 0:
+            if indicador_del_reactivo == 0:
                 for s in self._reactivos:
                     self._id_reactivo = max(s.get("id"))+1
                     break
-                self._id_reactivo = self._id_reactivo+ + 1
+                self._id_reactivo = self._id_reactivo+ 1
                 Gestion_de_Reactivos.Configurar_Reactivo(self)
                 Gestion_de_Reactivos.Configurar_json(self)
                 return "se agrego el reactivo exitosamente."
