@@ -18,9 +18,13 @@ class __Reactivos:
         self._conversiones_posibles = None
         self._rotacion = None
         self._veces_que_falto = None
+        self._desperdicio = None
+        self._caduco = None
         self._reactivos = []
         
     def Lector_de_Datos(self):
+        #Este metodo se utiliza para mandar a sacar la informacion del url
+        
         api = _Lector_de_APIS("https://raw.githubusercontent.com/Algoritmos-y-Programacion/api-proyecto/refs/heads/main/reactivos.json", 2)
         api.Hacer_Request()
         archivo = open("Reactivos.json","r", encoding = "utf-8")
@@ -33,8 +37,7 @@ class __Reactivos:
     def Agregar_Contadores(self):
         
         #Este metodo se encarga de asociar los datos de la API que guardamos en el archivo Reactivos.json con los atributos de la clase.
-        #Este metodo tambien se encargan de auxiliar a los demas metodos de la clase.
-        #El valor que recibe el parametro accion es el que determina cual es el metodo que esta auxiliando.
+        #Aqui actualizaremos los datos agregandole los contadores de cuantas veces fueron rotados, se agotaron, cuantas veces hizo falta para hacer un experimento y cuantas veces se desperdicio el reactivos. 
         reactivos_copia=[]
         for s in self._reactivos:
             self._id_reactivo = s.get("id")
@@ -49,13 +52,15 @@ class __Reactivos:
             self._conversiones_posibles = s.get("conversiones_posibles")
             self._rotacion = 0
             self._veces_que_falto = 0
+            self._desperdicio = 0
+            self._caduco = 0
 
-            aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles, "rotacion": self._rotacion,"veces_que_falto": self._veces_que_falto}
+            aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles, "rotacion": self._rotacion,"veces_que_falto": self._veces_que_falto,"veces_que_se_desperdicio":self._desperdicio,"veces_que_caduco":self._caduco}
             reactivos_copia.append(aux)
         self._reactivos = reactivos_copia
    
     def Configurar_json(self):
-
+        #Este metodo actualiza la base de datos del inventario con cada accion que cambie algun detalle de algun reactivo.
         archivo = open("Reactivos.json","w", encoding = "utf-8")
         for s in self._reactivos:
             aux = json.dumps(s)

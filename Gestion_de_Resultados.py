@@ -63,6 +63,6 @@ class Gestion_de_Resultados:
                     self.__resultados.append([self.__id_experimento,Verificador(minimo,maximo,self.__resultado)])
         print("---RESULTADOS---")
         for s in self.__resultados:
-            print(f"ID del experimento: {s[0]}, Resultado: {s[1]}")
+            print(f"ID del experimento: {s[0]}, Resultado: {s[1]}\n-------------\n")
 
             

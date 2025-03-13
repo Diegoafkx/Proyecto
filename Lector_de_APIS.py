@@ -1,6 +1,5 @@
 import requests
 import json
-
 #Esta clase se encarga de leer las APIS y guardarlas en un archivo JSON, dependiendo del inidicador del que se trate
 #Si el indicador es 1, se leera la API que contiene las recetas y las pondria en un archivo JSON llamado Recetas.json
 #Si el indicador es 2, se leera la API que contiene los reactivos y las pondria en un archivo JSON llamado Reactivos.json
@@ -12,6 +11,7 @@ class _Lector_de_APIS:
         self.url = url
 
     def Hacer_Request(self):
+        #Este es metodo que leeera los url y creara los json
         aux = requests.get(self.url)
         if aux.status_code == 200:
          self.url = aux.json()

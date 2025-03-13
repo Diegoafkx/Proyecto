@@ -36,23 +36,27 @@ class Gestion_de_Reactivos(__Reactivos):
             self._conversiones_posibles = s.get("conversiones_posibles")
             self._rotacion = s.get("rotacion")
             self._veces_que_falto = s.get("veces_que_falto")
+            self._desperdicio = s.get("veces_que_se_desperdicio")
+            self._caduco = s.get("veces_que_caduco")
             
             
             if accion == -1:
-                #Esta accion se encarga de enviar los datos del reactivo que se desea ver.
+                #Esta accion se encarga de enviar los datos del reactivo een especifico que se desea ver.
                 if self._id_reactivo == indicador_del_reactivo:
                     return f"Nombre: {self._nombre}\nDescripcion: {self._descripcion}\nCosto: {self._costo}\nCategoria: {self._categoria}\nInventario_disponible: {self._inventario_disponible}\nUnidad_medida: {self._unidad_de_medicion}\nFecha_caducidad: {self._fecha_de_caducidad}" 
 
             elif accion == 0:
+                #Esta accion se encarga de mostrar los datos de todos los reactivos del inventario.
                 print(f"Nombre: {self._nombre}\nDescripcion: {self._descripcion}\nCosto: {self._costo}\nCategoria: {self._categoria}\nInventario_disponible: {self._inventario_disponible}\nUnidad_medida: {self._unidad_de_medicion}\nFecha_caducidad: {self._fecha_de_caducidad}\n------------------------------------------------------------\n")
 
             elif accion == 1:
+                #Esta accion restablece el inventario de un reactivo.
                 if indicador_del_reactivo == self._id_reactivo:
-                    print(f"La Cantidad disponible es: {self._inventario_disponible}")
-                    self._inventario_disponible = self._inventario_disponible + int(input("Cuanta cantidad que desea sumarles: "))
+                    print(f"La Cantidad disponible en el inventario es: {self._inventario_disponible}")
+                    self._inventario_disponible = self._inventario_disponible + int(input("Ingeerse cuanto se le va a sumar al inventario: "))
                     print(f"La cantidad disponible ahora es: {self._inventario_disponible}")
                     self._rotacion += 1
-                aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles,"rotacion": self._rotacion,"veces_que_falto": self._veces_que_falto}
+                aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles, "rotacion": self._rotacion,"veces_que_falto": self._veces_que_falto,"veces_que_se_desperdicio":self._desperdicio,"veces_que_caduco":self._caduco}
                 reactivo_copia.append(aux)
             
             elif accion == 2:
@@ -60,7 +64,7 @@ class Gestion_de_Reactivos(__Reactivos):
                 #Esta se encarga de editar un reactivo en especifico.
                 if indicador_del_reactivo == self._id_reactivo:
                     Gestion_de_Reactivos.Configurar_Reactivo(self)
-                aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles,"rotacion": self._rotacion,"veces_que_falto": self._veces_que_falto }
+                aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles, "rotacion": self._rotacion,"veces_que_falto": self._veces_que_falto,"veces_que_se_desperdicio":self._desperdicio,"veces_que_caduco":self._caduco}
                 reactivo_copia.append(aux)
 
             elif accion == 3:
@@ -70,9 +74,9 @@ class Gestion_de_Reactivos(__Reactivos):
                     pass
                 else:
                     if indicador_del_reactivo < self._id_reactivo:
-                        aux = {"id":self._id_reactivo - 1,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles,"rotacion": self._rotacion,"veces_que_falto": self._veces_que_falto}
+                        aux = {"id":self._id_reactivo - 1,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles, "rotacion": self._rotacion,"veces_que_falto": self._veces_que_falto,"veces_que_se_desperdicio":self._desperdicio,"veces_que_caduco":self._caduco}
                     else:
-                        aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles,"rotacion": self._rotacion,"veces_que_falto": self._veces_que_falto}
+                        aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles, "rotacion": self._rotacion,"veces_que_falto": self._veces_que_falto,"veces_que_se_desperdicio":self._desperdicio,"veces_que_caduco":self._caduco}
                     reactivo_copia.append(aux)
                 
             elif accion == 4:
@@ -117,10 +121,12 @@ class Gestion_de_Reactivos(__Reactivos):
                         self._conversiones_posibles= conversiones
                         self._conversiones_posibles.append({"unidad": unidad, "factor": factor})
                 
-                aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles,"rotacion": self._rotacion,"veces_que_falto": self._veces_que_falto }
+                aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles, "rotacion": self._rotacion,"veces_que_falto": self._veces_que_falto,"veces_que_se_desperdicio":self._desperdicio,"veces_que_caduco":self._caduco}
                 reactivo_copia.append(aux)
 
-            if accion == 6:
+            elif accion == 6:
+                #Esta accion auxilia al metodo Hacer Experimento del modulo Gestion de Experimento, le resta la cantidad necesaria para el experimento y avisa si hace falta de reactivo para poder rrealizar el eexperimento.
+                #Aqui el indicador no es el id del reactivo si no una lista de la receta que tiene el id del reactivo y cuanto reactivo see requiere.
                 for s in indicador_del_reactivo:
                     if self._id_reactivo == s.get("reactivo_id"):
                         while True:
@@ -132,17 +138,32 @@ class Gestion_de_Reactivos(__Reactivos):
                                 else:
                                     print(f"No hay suficiente cantidad en el inventario del reactivo {self._nombre} para realizar el experimento.\nCantidad necesaria: {s.get('cantidad_necesaria')}\nCantidad en el inventario: {self._inventario_disponible}\nPor favor agrega mas cantidad al inventario")
                                     self._veces_que_falto += 1
-                                    Gestion_de_Reactivos.Agregar_Editar_o_Eliminar_Reactivo(self,2)
+                                    
                             else:
                                 print(f"Es necesario hacer cambios de unidades de medicion para poder realizar el experimento.\nLa unidad de medicion del reactivo {self._nombre} es {self._unidad_de_medicion} y la cantidad necesaria es {s.get("unidad_medida")}\nRealizando cambio de medición")
                                 Gestion_de_Reactivos.Cambiar_la_UnidadMedida(self, self._id_reactivo)
-                aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles,"rotacion": self._rotacion,"veces_que_falto": self._veces_que_falto }
+                aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles, "rotacion": self._rotacion,"veces_que_falto": self._veces_que_falto,"veces_que_se_desperdicio":self._desperdicio,"veces_que_caduco":self._caduco}
                 reactivo_copia.append(aux)
-        
+
+            elif accion == 7:
+                #Esta accion auxilia al metodo Vencimiento de reeactivos, buscando que reactivos se han vencido.
+                if self.fecha == self._fecha_de_caducidad:
+                    self._inventario_disponible = 0
+                    self._caduco += 1
+                aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles, "rotacion": self._rotacion,"veces_que_falto": self._veces_que_falto,"veces_que_se_desperdicio":self._desperdicio,"veces_que_caduco":self._caduco}
+                reactivo_copia.append(aux)
+
+            elif accion == 8:
+                #Esta accion axulia al metodo Desperdicio, le suma uno al contador de veces que se desperdicio el reactivo al haber fracasado el experimeento.
+                if self._id_reactivo == indicador_del_reactivo:
+                    self._desperdicio += 1
+                aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles, "rotacion": self._rotacion,"veces_que_falto": self._veces_que_falto,"veces_que_se_desperdicio":self._desperdicio,"veces_que_caduco":self._caduco}
+                reactivo_copia.append(aux)
+
         if accion == 0:
             return f"No hay reactivo con el ID{indicador_del_reactivo}"
 
-        elif accion == 1 and accion == 2 or accion == 3 or accion == 5 or accion == 6:
+        elif accion == 1 and accion == 2 or accion == 3 or accion == 5 or accion == 6 or accion == 7 or accion == 8:
 
             #Ayuda a los metodos Agregar_Editar_o_Eliminar_Reactivo y Cambiar_la_UnidadMedida.
             #Se encarga de guardar los cambios en la lista de reactivos. 
@@ -170,7 +191,8 @@ class Gestion_de_Reactivos(__Reactivos):
                 Gestion_de_Reactivos.Configurar_json(self)
                 return "se agrego el reactivo exitosamente."
             else:
-                Gestion_de_Reactivos.Configurar_Reactivo(self)
+
+                Gestion_de_Reactivos.Analizador_de_Informacion_Reactivo(indicador_del_reactivo,1)
                 Gestion_de_Reactivos.Configurar_json(self)
                 return "se agrego el reactivo exitosamente."
 
@@ -184,14 +206,11 @@ class Gestion_de_Reactivos(__Reactivos):
 
     def Estatus_de_los_Reactivos(self):
         #Este metodo se encarga de ver el estatus de los reactivos, si hay alguno que tenga menos de la cantidad minima sugerida.
-        advertensia = Gestion_de_Reactivos.Analizador_de_Informacion_Reactivo(self,0,False,4, None)
+        advertensia = Gestion_de_Reactivos.Analizador_de_Informacion_Reactivo(self,None,4)
         if self.advise == True:
             print("-------ADVERTENCIA-----")
             for s in advertensia:
-                print(f"No hay de la cantidad requerrida en el inventario del reactivo: {s[0]}\nCantidad minima sugerida: {s[1]}\nCantidad en el inventario: {s[2]}")
-        
-        else:
-            print("Todo en orden")
+                print(f"No hay de la cantidad requerrida en el inventario del reactivo: {s[0]}\nCantidad minima sugerida: {s[1]}\nCantidad en el inventario: {s[2]}\n---------------------------\n")
 
     def Cambiar_la_UnidadMedida(self, indicador_del_reactivo):
         #Este metodo se encarga de cambiar la unidad de medicion de un reactivo en especifico.
@@ -202,7 +221,12 @@ class Gestion_de_Reactivos(__Reactivos):
                 print(f"Nombre: {self._nombre}\nDescripcion: {self._descripcion}\nCosto: {self._costo}\nCategoria: {self._categoria}\nInventario_disponible: {self._inventario_disponible}\nUnidad_medida: {self._unidad_de_medicion}\nFecha_caducidad: {self._fecha_de_caducidad}")
                 return("Se a cambiado la unidad de medicion con exito")
                 
-            
+    def Vencimiento_de_Reactivo(self,fecha):
+        self.fecha = fecha
+        Gestion_de_Reactivos.Analizador_de_Informacion_Reactivo(self,None,7)
+
+    def Desperdicio(self,indicador_del_reactivo):
+        Gestion_de_Reactivos.Analizador_de_Informacion_Reactivo(self,indicador_del_reactivo,8)
 
     def Configurar_Reactivo(self):
 
