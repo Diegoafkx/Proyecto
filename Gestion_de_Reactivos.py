@@ -1,15 +1,20 @@
 from Reactivos import __Reactivos
+
 import json
 
 #Modulo que se encarga de gestionar los reactivos, agregar, editar, eliminar, cambiar la unidad de medicion y ver el estatus de los reactivos
 #Heredo todos los atributos y metodos de la clase __Reactivos
-#Arreglar codigo utilizar update, remove y en editar y eliminar
 class Gestion_de_Reactivos(__Reactivos):
-    def __init__(self):
+    def __init__(self,aux):
         super().__init__()
-        Gestion_de_Reactivos.Lector_de_Datos(self)
-        Gestion_de_Reactivos.Agregar_Contadores(self)
-        Gestion_de_Reactivos.Configurar_json(self)
+        if aux == 1:
+            Gestion_de_Reactivos.Guardar_Datos(self)
+            Gestion_de_Reactivos.Lector_de_Datos(self)
+            Gestion_de_Reactivos.Agregar_Contadores(self)
+            Gestion_de_Reactivos.Configurar_json(self)
+        
+        else:
+            Gestion_de_Reactivos.Lector_de_Datos(self)
 
     def Analizador_de_Informacion_Reactivo(self,indicador_del_reactivo,accion):
         
@@ -22,6 +27,7 @@ class Gestion_de_Reactivos(__Reactivos):
         advertensia = []
         self.advise = False
         self.costo = []
+        self.fallo = False
 
         for s in self._reactivos:
             self._id_reactivo = s.get("id")
@@ -53,8 +59,8 @@ class Gestion_de_Reactivos(__Reactivos):
                 #Esta accion restablece el inventario de un reactivo.
                 if indicador_del_reactivo == self._id_reactivo:
                     print(f"La Cantidad disponible en el inventario es: {self._inventario_disponible}")
-                    self._inventario_disponible = self._inventario_disponible + int(input("Ingeerse cuanto se le va a sumar al inventario: "))
-                    print(f"La cantidad disponible ahora es: {self._inventario_disponible}")
+                    self._inventario_disponible = self._inventario_disponible + int(input("Ingrese cuanto se le va a sumar al inventario: "))
+                    print(f"La Cantidad disponible ahora es: {self._inventario_disponible}")
                     self._rotacion += 1
                 aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles, "rotacion": self._rotacion,"veces_que_falto": self._veces_que_falto,"veces_que_se_desperdicio":self._desperdicio,"veces_que_caduco":self._caduco}
                 reactivo_copia.append(aux)
@@ -132,12 +138,14 @@ class Gestion_de_Reactivos(__Reactivos):
                         while True:
                             if self._unidad_de_medicion == s.get("unidad_medida"):
                                 if self._inventario_disponible >= s.get("cantidad_necesaria"):
-                                    self.costo.append(s.get("costo"))
+                                    self.costo.append(self._costo)
                                     self._inventario_disponible = self._inventario_disponible - s.get("cantidad_necesaria")
                                     break
                                 else:
                                     print(f"No hay suficiente cantidad en el inventario del reactivo {self._nombre} para realizar el experimento.\nCantidad necesaria: {s.get('cantidad_necesaria')}\nCantidad en el inventario: {self._inventario_disponible}\nPor favor agrega mas cantidad al inventario")
                                     self._veces_que_falto += 1
+                                    self.fallo = True
+                                    break
                                     
                             else:
                                 print(f"Es necesario hacer cambios de unidades de medicion para poder realizar el experimento.\nLa unidad de medicion del reactivo {self._nombre} es {self._unidad_de_medicion} y la cantidad necesaria es {s.get("unidad_medida")}\nRealizando cambio de medición")
@@ -146,7 +154,7 @@ class Gestion_de_Reactivos(__Reactivos):
                 reactivo_copia.append(aux)
 
             elif accion == 7:
-                #Esta accion auxilia al metodo Vencimiento de reeactivos, buscando que reactivos se han vencido.
+                #Esta accion auxilia al metodo Vencimiento de reactivos, buscando que reactivos se han vencido.
                 if self.fecha == self._fecha_de_caducidad:
                     self._inventario_disponible = 0
                     self._caduco += 1
@@ -155,10 +163,11 @@ class Gestion_de_Reactivos(__Reactivos):
 
             elif accion == 8:
                 #Esta accion axulia al metodo Desperdicio, le suma uno al contador de veces que se desperdicio el reactivo al haber fracasado el experimeento.
-                if self._id_reactivo == indicador_del_reactivo:
-                    self._desperdicio += 1
-                aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles, "rotacion": self._rotacion,"veces_que_falto": self._veces_que_falto,"veces_que_se_desperdicio":self._desperdicio,"veces_que_caduco":self._caduco}
-                reactivo_copia.append(aux)
+                for s in indicador_del_reactivo:
+                    if self._id_reactivo == s.get("reactivo_id"):
+                        self._desperdicio += 1
+                    aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles, "rotacion": self._rotacion,"veces_que_falto": self._veces_que_falto,"veces_que_se_desperdicio":self._desperdicio,"veces_que_caduco":self._caduco}
+                    reactivo_copia.append(aux)
 
         if accion == 0:
             return f"No hay reactivo con el ID{indicador_del_reactivo}"
@@ -178,21 +187,22 @@ class Gestion_de_Reactivos(__Reactivos):
         #Este metodo se encarga de agregar, editar o eliminar un reactivo.
         #El parametro indicador_del_reactivo es el id del reactivo que se desea editar o eliminar.
         #El parametro auxiliador es el que determina que accion se va a realizar, esto para que el metodo Analizador_de_Informacion_Reactivo sepa que hacer.
-        #Si auxiliador es 1, se agrega un reactivo.
+        #Si auciliador es 0, se agrega un reactivo nuevo.
+        #Si auxiliador es 1, se agrega mas cantidad de un reactivo.
         #Si auxiliador es 2, se edita un reactivo.
         #Si auxiliador es 3, se elimina un reactivo.
         if auxiliador == 1:
             if indicador_del_reactivo == 0:
-                for s in self._reactivos:
-                    self._id_reactivo = max(s.get("id"))+1
-                    break
+                
+                self._id_reactivo = (self._reactivos[-1]).get("id") + 1
+                
                 self._id_reactivo = self._id_reactivo+ 1
                 Gestion_de_Reactivos.Configurar_Reactivo(self)
                 Gestion_de_Reactivos.Configurar_json(self)
                 return "se agrego el reactivo exitosamente."
             else:
 
-                Gestion_de_Reactivos.Analizador_de_Informacion_Reactivo(indicador_del_reactivo,1)
+                Gestion_de_Reactivos.Analizador_de_Informacion_Reactivo(self,indicador_del_reactivo,1)
                 Gestion_de_Reactivos.Configurar_json(self)
                 return "se agrego el reactivo exitosamente."
 
@@ -218,14 +228,16 @@ class Gestion_de_Reactivos(__Reactivos):
         Gestion_de_Reactivos.Analizador_de_Informacion_Reactivo(self,indicador_del_reactivo, 5)
         for i in self._reactivos:
             if i.get("id") == indicador_del_reactivo:
-                print(f"Nombre: {self._nombre}\nDescripcion: {self._descripcion}\nCosto: {self._costo}\nCategoria: {self._categoria}\nInventario_disponible: {self._inventario_disponible}\nUnidad_medida: {self._unidad_de_medicion}\nFecha_caducidad: {self._fecha_de_caducidad}")
+                print(f"Nombre: {i.get("nombre")}\nDescripcion: {i.get("descripcion")}\nCosto: {i.get("costo")}\nCategoria: {i.get("categoria")}\nInventario_disponible: {i.get("inventario_disponible")}\nUnidad_medida: {i.get("unidad_medida")}\nFecha_caducidad: {i.get("fecha_caducidad")}")
                 return("Se a cambiado la unidad de medicion con exito")
                 
     def Vencimiento_de_Reactivo(self,fecha):
+        #Este metodo auxilia el inicio del progama cuando ingresas la fecha del dia al iniciar el programa para buscar si algun reactivo se va a caducar ese dia.
         self.fecha = fecha
         Gestion_de_Reactivos.Analizador_de_Informacion_Reactivo(self,None,7)
 
     def Desperdicio(self,indicador_del_reactivo):
+        #Este metodo auxilia al metodo Hcer Experimento de la clase Gestion dee Experimentos
         Gestion_de_Reactivos.Analizador_de_Informacion_Reactivo(self,indicador_del_reactivo,8)
 
     def Configurar_Reactivo(self):
@@ -255,6 +267,11 @@ class Gestion_de_Reactivos(__Reactivos):
         #Este metodo se encarga de hacer un experimento.
         #Aqui va decir si hay la cantidad necesaria o en su defecto, si es necesario hacer un cambio de unidad de medicion.
         #El parametro indicador_del_reactivo es una lista de los reactivos que se van a utilizar en el experimento.s
-        Gestion_de_Reactivos.Analizador_de_Informacion_Reactivo(self,indicador_del_reactivo,6)
-        return self.costo
-
+        
+        aux = Gestion_de_Reactivos.Analizador_de_Informacion_Reactivo(self,indicador_del_reactivo,6)
+        if self.fallo == False:
+            lista = self.costo
+            return lista
+        else: 
+            aux = self.fallo
+            return aux

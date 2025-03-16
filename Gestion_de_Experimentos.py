@@ -24,13 +24,13 @@ class Gestion_de_Experimentos(__Experimnto_y_Receta):
 
             if accion == 0:
                 #Esta accion imprime la informacion de todos los experimentos
-                Gestion_de_Experimentos.Analizador_de_Informacion_Experimento(self,self._receta_id,1)
+                Gestion_de_Experimentos.Analizador_de_Informacion_Recetas(self,self._receta_id,1)
                 print(f"Experimento\nNombre de la receta: {self._nombre}\nPersonas Responsables: {self._personas_responsables}\nFecha de Realizacion: {self._fecha}\nCosto: {self._costo_asociado}\nResulatdo: {self._resultado}\n----------------------")
 
             elif accion == 1:
                 #Esta accion imprime la informacion de un expeerimento en especifico
                 if indicador_de_experimento == self._id_experimento:
-                    Gestion_de_Experimentos.Analizador_de_Informacion_Experimento(self,self._receta_id,1)
+                    Gestion_de_Experimentos.Analizador_de_Informacion_Recetas(self,self._receta_id,1)
                     print(f"Experimento\nNombre de la receta: {self._nombre}\nPersonas Responsables: {self._personas_responsables}\nFecha de Realizacion: {self._fecha}\nCosto: {self._costo_asociado}\nResulatdo: {self._resultado}")
                     break
 
@@ -90,13 +90,8 @@ class Gestion_de_Experimentos(__Experimnto_y_Receta):
         #El parametro accion indica que accion se va a realizar
         if accion == 1:
             #Esta accion se encarga de crear un experimento 
-            for s in self._experimentos:    
-                self._id_experimento = max(s.get("id")) + 1
-                break
+            self._id_experimento = (self._experimentos[-1]).get("id") +1
             Gestion_de_Experimentos.Hacer_Experimento(self)
-            aux = {"id":self._id_experimento,"receta_id":self._receta_id,"personas_responsables":self._personas_responsables,"fecha":self._fecha ,"costo_asociado":self._costo_asociado ,"resultado":self._resultado}
-            self._experimentos.append(aux)
-            Gestion_de_Experimentos.Configurar_json(self)
 
         elif accion == 2:
             #Esta accion se encarga de editar un experimento 
@@ -115,8 +110,8 @@ class Gestion_de_Experimentos(__Experimnto_y_Receta):
     def Configurar_Experimento(self):
         #Este metodo se encarga ded auxiliar a modulo Agregar Editar o Eliminar, especificamente a editar
         self._id_receta = int(input("Ingresa el ID de la receta que vas a utilizar: "))
-        self._personas_responsables = []
-        self._personas_responsables.append((input("Ingrese las personas responsables del proyecto: ").split(",")))
+        x = input("Ingrese las personas responsables del proyecto: ").split(",")
+        self._personas_responsables = x
         self._fecha = input("Ingresa la fecha: ")
         self._costo_asociado = int(input("Ingresa el costo asociado: "))
         self._resultado = input("Ingresa el resultado: ")
@@ -127,54 +122,61 @@ class Gestion_de_Experimentos(__Experimnto_y_Receta):
         maximo= []
         minimo = []
         margen_de_resultado = []
+        personas = []
         x = []
         self._id_receta = int(input("Ingresa el ID de la receta que vas a utilizar: "))
-        self._personas_responsables.append((input("Ingrese las personas responsables del proyecto: ").split(",")))
+        personas = input("Ingrese las personas responsables del proyecto: ").split(",")
+        self._personas_responsables = personas
         self._fecha = input("Ingresa la fecha: ")
         Gestion_de_Experimentos.Analizador_de_Informacion_Recetas(self,self._id_receta,1)
         print(f"Receta: {self._nombre}")
         print(f"Objetivo: {self._objetivo}")
-        print(f"Reactivos utilizados: {self._reactivos_utilizados}")
         print(f"Procedimiento: {self._procedimiento}")
-        print(f"Valores a medir: {self._valores_a_medir}")
-        margen_de_error = random.randint(0.1,22.5)
-        costo = Gestion_de_Reactivos.Experimento(self,self._reactivos_utilizados)
-        self._costo_asociado = sum(costo)
         
-        
-        for s in self._valores_a_medir:
-            minimo.append(s.get("minimo"))
-            maximo.append(s.get("maximo"))
+        gestion_reactivo= Gestion_de_Reactivos(2)
+        costo = gestion_reactivo.Experimento(self._reactivos_utilizados)
+        if costo != True:
+            #El metodo Experimentos returna el costo si 
+            self._costo_asociado = sum(costo)
+            
+            
+            for s in self._valores_a_medir:
+                minimo.append(s.get("minimo"))
+                maximo.append(s.get("maximo"))
 
-        margen_de_error =random.uniform(0.1,22.5)    
-        formula_de_resultado = random.choice(1,2)
-        aux = 0 
-        for aux in range(len(self._valores_a_medir)):
-            if formula_de_resultado == 1:
-                margen_de_resultado.append((minimo[aux]+ ((maximo[aux]* margen_de_error)/100)))
-            else:    
-                margen_de_resultado.append((maximo[aux] - (( maximo[aux]* margen_de_error)/100)))
+            margen_de_error =random.uniform(0.1,22.5)    
+            formula_de_resultado = random.choice([1,2])
             
+            for aux in range(len(self._valores_a_medir)):
+                if formula_de_resultado == 1:
+                    margen_de_resultado.append((minimo[aux]+ ((maximo[aux]* margen_de_error)/100)))
+                else:    
+                    margen_de_resultado.append((maximo[aux] - (( maximo[aux]* margen_de_error)/100)))
             
-        if minimo <= margen_de_resultado or margen_de_resultado <= maximo:
-            fallo= False
-            resultado = "Dentro del rango esperado"
-        else:
-            fallo = True
-            if minimo > margen_de_resultado:
-                resultado = "El resultado fue menor al minimo esperado"
+            if minimo <= margen_de_resultado and margen_de_resultado <= maximo:
+                print("EXPERIMENTO EXITOSO")
+                resultado = "Dentro del rango esperado"
             else:
-                resultado = "El resultado fue mayor al maximo esperado"
-
-        if fallo == True:
-            self._costo_asociado =+ margen_de_error
-        aux = 0 
-        for aux in range(len(self._valores_a_medir)):
-            x.append({self._valores_a_medir.get('nombre'): {margen_de_resultado}})
-        for aux in x:
-            valores_x = ', '.join([f"{list(aux.keys())[0]}: {list(aux.values())[0]}" ])
-        self._resultado = f"{valores_x}: {margen_de_resultado}. {resultado}"
-    
+                print("EXPERIMENTO FALLIDO")
+                if minimo > margen_de_resultado:
+                    resultado = "El resultado fue menor al minimo esperado"
+                else:
+                    resultado = "El resultado fue mayor al maximo esperado"
+            
+                self._costo_asociado =+ margen_de_error
+                gestion_reactivo.Analizador_de_Informacion_Reactivo(self._reactivos_utilizados,8)
+            
+            for aux in range(len(self._valores_a_medir)):
+                x.append({self._valores_a_medir[aux].get('nombre'): {margen_de_resultado[aux]}})
+            for aux in x:
+                valores_x = list(aux.keys())
+            self._resultado = f"{valores_x[0]}: {margen_de_resultado[0]}. {resultado}"
+            aux = {"id":self._id_experimento,"receta_id":self._id_receta,"personas_responsables":self._personas_responsables,"fecha":self._fecha ,"costo_asociado":self._costo_asociado ,"resultado":self._resultado}
+            self._experimentos.append(aux)
+            print(f"Resultado del experrimento: {self._resultado}")
+            Gestion_de_Experimentos.Configurar_json(self)
+        else:
+            return
     def Configurar_json(self):
         #Este metodo actualiza la base de datos del inventario con cada accion que cambie algun detalle de algun experimento.
         archivo = open("Experimentos.json","w", encoding = "utf-8")

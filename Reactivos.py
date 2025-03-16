@@ -22,11 +22,13 @@ class __Reactivos:
         self._caduco = None
         self._reactivos = []
         
-    def Lector_de_Datos(self):
+    def Guardar_Datos(self):
         #Este metodo se utiliza para mandar a sacar la informacion del url
         
         api = _Lector_de_APIS("https://raw.githubusercontent.com/Algoritmos-y-Programacion/api-proyecto/refs/heads/main/reactivos.json", 2)
         api.Hacer_Request()
+       
+    def Lector_de_Datos(self):
         archivo = open("Reactivos.json","r", encoding = "utf-8")
         informacion_del_archivo = archivo.readlines()
         for s in informacion_del_archivo:

@@ -6,23 +6,20 @@ from Indicadores_de_Gestion import *
 class laboratorio:
     def __init__(self):
         self.__experimentos = Gestion_de_Experimentos()
-        self.__reactivos = Gestion_de_Reactivos()
+        self.__reactivos = Gestion_de_Reactivos(1)
         self.__resultados = Gestion_de_Resultados()
-        self.__indicador = Indicadores_de_Gestion()
+        self.__indicador = None
 
     def Main(self):
         #Este metodo es el main de la aplicacion 
         while True:
-            fecha = input("Bienvenido al 'Laboratorio de Quimica Unimet', porfavor ingrese la fecha de hoy\n----->")
+            fecha = input("Bienvenido al 'Laboratorio de Quimica Unimet', porfavor ingrese la fecha de hoy (Año-mes-dia)\n----->")
             self.__reactivos.Vencimiento_de_Reactivo(fecha)
-            self.__reactivos.Estatus_de_los_Reactivos()
             while True:
                 print("-----MENU-----")
-                
-                
-                opcion = input("1. Ver los reactivos (Aqui podras ver todo lo relacionado a los reactivos)\n2. Ver experimentos (Aqui podras ver todo lo relacionado a los experimentos)\n3. Ver resultados (Aqui podras observar si los resultados estan dentro de los parametros)\n4. Ver estadistas (Aqui veras todo lo relacionado a estadisticas del laboratorio)\n5. Salir\n-------->")
-                
+                self.__reactivos.Estatus_de_los_Reactivos()
                 while True:
+                    opcion = input("----MENU-----\n1. Ver los reactivos (Aqui podras ver todo lo relacionado a los reactivos)\n2. Ver experimentos (Aqui podras ver todo lo relacionado a los experimentos)\n3. Ver resultados (Aqui podras observar si los resultados estan dentro de los parametros)\n4. Ver estadistas (Aqui veras todo lo relacionado a estadisticas del laboratorio)\n5. Salir\n-------->")
                     if opcion == "1":
                         laboratorio.Reacts(self)
                         
@@ -40,7 +37,7 @@ class laboratorio:
                         break
                         
                     else:
-                        opcion = input(f"ERROR\n{opcion} no es una opciona valida\nPorfavor intentelo otra vez\n-------->")
+                        print(f"ERROR\n{opcion} no es una opciona valida\nPorfavor intentelo otra vez\n-------->")
     
     def Reacts(self):
         #Este metodo se encarga ded todo lo relacionado a los reactivos
@@ -55,16 +52,16 @@ class laboratorio:
             elif opcion == "3":
                 opcion = input(f"------opciones----\n1. Agregar un nuevo reactivo\n2. Restablecer un reactivo existente\n------------->")
                 if opcion == "1":
-                    print(self.__experimentos.Agregar_Editar_o_Eliminar_Experimento(1,0))
+                    print(self.__reactivos.Agregar_Editar_o_Eliminar_Reactivo(1,0))
                 elif opcion == "2":
                     reactivo = int(input("Ingresa el ID del reactivo que deseas reabastecer\n------>"))
-                    print(self.__experimentos.Agregar_Editar_o_Eliminar_Experimento(1,reactivo))
+                    print(self.__reactivos.Agregar_Editar_o_Eliminar_Reactivo(1,reactivo))
             elif opcion == "4":
                 reactivo = int(input("Ingresa el ID del reactivo que deseas editar\n------>"))
-                print(self.__experimentos.Agregar_Editar_o_Eliminar_Experimento(2,reactivo))
+                print(self.__reactivos.Agregar_Editar_o_Eliminar_Reactivo(2,reactivo))
             elif opcion == "5":
                 reactivo = int(input("Ingresa el ID del reactivo que deseas eliminar\n------>"))
-                print(self.__experimentos.Agregar_Editar_o_Eliminar_Experimento(3,reactivo))
+                print(self.__reactivos.Agregar_Editar_o_Eliminar_Reactivo(3,reactivo))
             elif opcion == "6":
                 reactivo = int(input("Ingresa el ID del reactivo que deseas cambiar las unidades de medicion\n------>"))
                 print(self.__reactivos.Cambiar_la_UnidadMedida(reactivo))
@@ -76,7 +73,7 @@ class laboratorio:
     def Experiments(self):
         #Este metodo se encarga ded todo lo relacionado a los experimento
         while True:
-            opcion = input(f"-----EXPERIMENTOS-----\n----opciones----\n1. Ver un experimento en especifico\n2. Ver todos los experimentos\n3. Ver una recetas en especifico\n4. Ver todas las recetas\n5. Hacer un experimento\n6. Editar informacion de un experimento\n7. Eliminar un experimento de la base de datos\n8. Regresar------>")
+            opcion = input(f"-----EXPERIMENTOS-----\n----opciones----\n1. Ver un experimento en especifico\n2. Ver todos los experimentos\n3. Ver una recetas en especifico\n4. Ver todas las recetas\n5. Hacer un experimento\n6. Editar informacion de un experimento\n7. Eliminar un experimento de la base de datos\n8. Regresar\n------>")
             if opcion == "1":
                 experimento = int(input("Ingrese el ID del experimento que desea ver: "))
                 self.__experimentos.Analizador_de_Informacion_Experimento(experimento,1)
@@ -105,9 +102,9 @@ class laboratorio:
 
     def Estadistics(self):
         #Este metodo se encarga ded todo lo relacionado a las estadisticas
-       
+        self.__indicador = Indicadores_de_Gestion()
         while True:
-            opcion = input("-----ESTADISTICAS-----\n----opciones----\n1. Ver los investigadores que mas utilizan el laboratorio\n2. Ver el experimento mayor y menor hecho\n3. Ver los 5 reactivos con mayor rotacion (veces que se reabastecio el reactivo)\n4. Ver los 3 reactivos con mayor perdida\n5. Ver los reactivos que mas se vecen\n6. Ver cuantas veces no se pudo hacer un experimento por falta de reactivos\n7. Ver grafica con todas las estadisticas\n------>")
+            opcion = input("-----ESTADISTICAS-----\n----opciones----\n1. Ver los investigadores que mas utilizan el laboratorio\n2. Ver el experimento mayor y menor hecho\n3. Ver los 5 reactivos con mayor rotacion (veces que se reabastecio el reactivo)\n4. Ver los 3 reactivos con mayor perdida\n5. Ver los reactivos que mas se vecen\n6. Ver cuantas veces no se pudo hacer un experimento por falta de reactivos\n7. Regresar\n------>")
             if opcion == "1":
                 print(self.__indicador.Investigador_que_Utiliza_Mas_el_Lab())
             elif opcion == "2":
@@ -121,8 +118,6 @@ class laboratorio:
             elif opcion == "6":
                 self.__indicador.Veces_que_Falto_un_Reactivo()
             elif opcion == "7":
-                self.__indicador.Graficas()
-            elif opcion == "8":
                 break
             else:
                 print(f"ERROR\n{opcion} no es una opciona valida\nPorfavor intentelo otra vez")

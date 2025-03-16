@@ -45,22 +45,22 @@ class Indicadores_de_Gestion:
 
     def Experimento_Mas_y_Menos_Hecho(self):
         #Este metodo se encarga de buscar y imprimir los experimentos mas y menos realizados
-        experimento = {}
+        experimento1 = {}
         for receta in self.__recetas:    
             for experimento in self.__experimentos:
 
                 if (receta.get("id")) == experimento.get("receta_id"):
-                    if experimento.get("personas_responsables") == experimento.get(receta.get("nombre")):
-                        experimento[receta.get("nombre")] += 1
+                    if receta.get("nombre") in experimento1:
+                        experimento1[receta.get("nombre")] += 1
                         break
 
                     else:
-                        experimento[receta.get("nombre")] = 1
+                        experimento1[receta.get("nombre")] = 1
                 
-        experimento_mas_hecho = (max(experimento,key= experimento.get))
-        cantidad_mas_hecho = (max( experimento.values()))
-        experimento_menos_hecho = (min(experimento,key= experimento.get))
-        cantidad_menos_hecho = (min( experimento.values()))
+        experimento_mas_hecho = (max(experimento1,key= experimento1.get))
+        cantidad_mas_hecho = (max( experimento1.values()))
+        experimento_menos_hecho = (min(experimento1,key= experimento1.get))
+        cantidad_menos_hecho = (min( experimento1.values()))
         
         return(f"El experimento mas realizado es: {experimento_mas_hecho}\nHan sido {cantidad_mas_hecho} veces la cantidad que sea a repetido el experimento\nEl experimento menos realzaido es: {experimento_menos_hecho}\nHan sido {cantidad_menos_hecho} veces la cantidad que sea a repetido el experimento.")
     
@@ -94,35 +94,18 @@ class Indicadores_de_Gestion:
             print("No se a rotado ningun reactivo aun.")
 
     def Veces_que_Falto_un_Reactivo(self):
-        #Este metodo se encarga de imprimir todas las veces que un eexperimento no se pudo realizar por falta de reactivo, con el nombre del reactivo y cuantas veces fueron
-        reactivo_rotaciones = {}
-        reactivos_con_mayor_rotacion = []
-
+        #Este metodo se encarga de imprimir todas las veces que un eexperimento no se pudo realizar por falta de reactivo, con el nombre del reactivo y cuantas veces fuero.
+        contador = 0 
         for s in self.__reactivos:
-            reactivo_rotaciones[s.get("nombre")] = s.get("veces_que_falto")
-
-        aux = list(reactivo_rotaciones.values())
-        aux = sorted(aux, reverse= True)
-        counter = 1
-
-        for i in aux:
-            for s in reactivo_rotaciones:
-                if reactivo_rotaciones.get(s) != 0:
-                    if i == reactivo_rotaciones.get(s):
-                        reactivos_con_mayor_rotacion.append([s,reactivo_rotaciones[s]])
-                        break
-                else:
-                    break        
-
-        if reactivos_con_mayor_rotacion != []:
-            print("Las veces que faltaron un reactivo")
-            for s in range(len(reactivos_con_mayor_rotacion)):
-                print(f"No se pudo hacer un experimento porque falta en inventario del reactivo {(reactivos_con_mayor_rotacion[s])[0]}, {(reactivos_con_mayor_rotacion[s])[1]} veces.")
-
-        else:
-            print("No a ocurrido que un experimento no se haya podido realizar por falta de reactivo.")
+            if s.get("veces_que_falto") > 0:
+                print(f"En {s.get("veces_que_falto")} experimentos el reactivo: {s.get("nombre")} hizo falta ")
+            else:
+                contador+= 1
+        if contador == len(self.__reactivos):
+            print("Aun no se a llegado a no poder realizar un experimento porr falta de reactivo.")
 
     def Mayor_Perdida(self):
+        #Este metodo se encarga de imprimir los 3 reactivos que mas se han perdido cuadno un experimento fracasa.
         reactivo_desperdicio = {}
         reactivos_con_mayor_desperdicio = []
         for s in self.__reactivos:
@@ -150,6 +133,7 @@ class Indicadores_de_Gestion:
             print("No se a desperdiciado ningun reactivo aun.")
 
     def Mas_se_Vencen(self):
+        #Este metodo se encarga de imprimir los 3 experimentos que mas se han caducado. 
         reactivo_caduco = {}
         reactivos_con_mayor_caducacion = []
         for s in self.__reactivos:
@@ -175,7 +159,3 @@ class Indicadores_de_Gestion:
                 print(f"{s+1}.{(reactivos_con_mayor_caducacion[s])[0]} se a caducado {(reactivos_con_mayor_caducacion[s])[1]} veces.")
         else:
             print("No se a caducado ningun reactivo aun.")
-
-
-    def Graficas(self):
-        pass
