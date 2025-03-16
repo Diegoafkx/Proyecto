@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 OPR/117.0.0.0" version="26.1.0">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 OPR/117.0.0.0" version="26.1.1">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="2331" dy="2290" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1844" dy="1988" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -17,7 +17,7 @@
           <mxGeometry y="78" width="160" height="30" as="geometry" />
         </mxCell>
         <mxCell id="yadymEA7RUQ70bokF_j9-47" value="Gestion de Reactivos" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="1120" y="-720" width="290" height="410" as="geometry" />
+          <mxGeometry x="1170" y="-720" width="290" height="410" as="geometry" />
         </mxCell>
         <mxCell id="4Xs0aHdV4oRhz_bXZEXm-0" value="&lt;div&gt;#id reactivo: int&lt;/div&gt;&lt;div&gt;#nombre: string&lt;/div&gt;&lt;div&gt;#descripcion: string&lt;/div&gt;&lt;div&gt;#costo: float&lt;/div&gt;&lt;div&gt;#categoria: string&lt;/div&gt;&lt;div&gt;#inventario_disponible: int&lt;/div&gt;&lt;div&gt;#unidad_de_medicion: string&lt;/div&gt;&lt;div&gt;#fecha_de_caducidad: string&lt;/div&gt;&lt;div&gt;#minimo_sugerido: int&lt;/div&gt;&lt;div&gt;#conversion_disponible: conversiones[]&lt;/div&gt;&lt;div&gt;#rotacion: int&lt;/div&gt;&lt;div&gt;#veces_que_falto(): int&lt;/div&gt;&lt;div&gt;#reactivos: reactivos[]&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="yadymEA7RUQ70bokF_j9-47" vertex="1">
           <mxGeometry y="26" width="290" height="194" as="geometry" />
@@ -53,7 +53,7 @@
           <mxGeometry y="118" width="270" height="42" as="geometry" />
         </mxCell>
         <mxCell id="yadymEA7RUQ70bokF_j9-59" value="Indicadores de Gestion" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="780" y="-360" width="290" height="200" as="geometry" />
+          <mxGeometry x="800" y="-550" width="290" height="200" as="geometry" />
         </mxCell>
         <mxCell id="yadymEA7RUQ70bokF_j9-60" value="-reactivo: reactivo[]&lt;div&gt;-experimento: []&lt;/div&gt;&lt;div&gt;-informacion_del_experimento: informacion[]&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="yadymEA7RUQ70bokF_j9-59" vertex="1">
           <mxGeometry y="26" width="290" height="54" as="geometry" />
@@ -104,6 +104,8 @@
             <Array as="points">
               <mxPoint x="1520" y="-623" />
               <mxPoint x="1520" y="-216" />
+              <mxPoint x="1150" y="-216" />
+              <mxPoint x="1150" y="-406" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -141,7 +143,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="slcs6eY3vTVtAFyWJ08a-12" value="Laboratorio" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="740" y="-120" width="160" height="86" as="geometry" />
+          <mxGeometry x="840" y="-300" width="160" height="86" as="geometry" />
         </mxCell>
         <mxCell id="slcs6eY3vTVtAFyWJ08a-13" value="+ field: type" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="slcs6eY3vTVtAFyWJ08a-12" vertex="1">
           <mxGeometry y="26" width="160" height="26" as="geometry" />
