@@ -177,6 +177,7 @@ class Gestion_de_Experimentos(__Experimnto_y_Receta):
             Gestion_de_Experimentos.Configurar_json(self)
         else:
             return
+  
     def Configurar_json(self):
         #Este metodo actualiza la base de datos del inventario con cada accion que cambie algun detalle de algun experimento.
         archivo = open("Experimentos.json","w", encoding = "utf-8")

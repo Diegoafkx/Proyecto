@@ -3,7 +3,7 @@ from Gestion_de_Reactivos import *
 from Gestion_de_Resultados import *
 from Indicadores_de_Gestion import *
 
-class laboratorio:
+class Laboratorio:
     def __init__(self):
         self.__experimentos = Gestion_de_Experimentos()
         self.__reactivos = Gestion_de_Reactivos(1)
@@ -122,5 +122,5 @@ class laboratorio:
             else:
                 print(f"ERROR\n{opcion} no es una opciona valida\nPorfavor intentelo otra vez")
 
-lab =laboratorio()
+lab =Laboratorio()
 lab.Main()

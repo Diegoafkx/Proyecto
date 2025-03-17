@@ -169,7 +169,7 @@ class Gestion_de_Reactivos(__Reactivos):
                     aux = {"id":self._id_reactivo,"nombre": self._nombre, "descripcion": self._descripcion, "costo": self._costo, "categoria": self._categoria, "inventario_disponible": self._inventario_disponible, "unidad_medida": self._unidad_de_medicion, "fecha_caducidad": self._fecha_de_caducidad, "minimo_sugerido": self._minimo_sugerido, "conversiones_posibles" :self._conversiones_posibles, "rotacion": self._rotacion,"veces_que_falto": self._veces_que_falto,"veces_que_se_desperdicio":self._desperdicio,"veces_que_caduco":self._caduco}
                     reactivo_copia.append(aux)
 
-        if accion == 0:
+        if accion == -1:
             return f"No hay reactivo con el ID{indicador_del_reactivo}"
 
         elif accion == 1 and accion == 2 or accion == 3 or accion == 5 or accion == 6 or accion == 7 or accion == 8:
